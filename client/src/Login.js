@@ -1,7 +1,7 @@
 import React, { useState } from "react"; 
 
 
-
+//puttinh it all togethet
 function Login() {
 	const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -28,39 +28,43 @@ function Login() {
   }
 
     return (
+
+      <div>
+        <p>I am login</p>
 			<form onSubmit={handleSubmit}>
-      <FormField>
-        <Label htmlFor="username">Username</Label>
-        <Input
+      <label>Username</label>
+        <input
           type="text"
           id="username"
           autoComplete="off"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Label htmlFor="password">Password</Label>
-        <Input
+      
+      
+      <label>Password</label>
+        <input
           type="password"
           id="password"
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </FormField>
-      <FormField>
-        <Button variant="fill" color="primary" type="submit">
+      
+      
+        <button variant="fill" color="primary" type="submit">
           {isLoading ? "Loading..." : "Login"}
-        </Button>
-      </FormField>
-      <FormField>
-        {errors.map((err) => (
+        </button>
+      
+      
+        {/* {errors.map((err) => (
           <Error key={err}>{err}</Error>
-        ))}
-      </FormField>
+        ))} */}
+      
     </form>
+    </div>
   );
+  
 }
 
 

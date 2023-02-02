@@ -1,6 +1,6 @@
 import React from "react"; 
 
-function Concert() {
+function Concerts() {
 
     return (
         <div>
@@ -8,3 +8,5 @@ function Concert() {
         </div>
     )
 }
+
+export default Concerts;
