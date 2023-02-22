@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2023_01_19_011625) do
   end
 
   create_table "concert_tickets", force: :cascade do |t|
+    # create_table "concert_bamds", force: :cascade do |t|
     t.string "title"
     t.integer "band_id"
     t.integer "user_id"
