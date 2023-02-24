@@ -5,6 +5,6 @@ end
 
 attributes :id, :username
 
-has_many :foods
-has_many :cookouts, through: :foods
+has_many :bands
+has_many :concert_tickets, through: :bands
 end

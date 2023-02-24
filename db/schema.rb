@@ -28,4 +28,9 @@ ActiveRecord::Schema.define(version: 2023_01_19_011112) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table :concert_tickets do |t|
+    t.string :name
+    t.timestamps
+  end
+
 end

@@ -4,6 +4,6 @@ end
 
 attributes :id, :name, :start_time, :end_time
 
-has_many :foods
-has_many :users, through: :foods
+has_many :bands
+has_many :users, through: :bands
 end

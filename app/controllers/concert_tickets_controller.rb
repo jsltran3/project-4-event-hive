@@ -1,53 +1,41 @@
 class ConcertTicketsController < ApplicationController
     def create 
-        # byebug
 
-        # Previously UNWORKING code to show the problem I fixed
-        # cookout = @current_user.cookouts.create!(cookout_params)
-
-        # NOTE: To step through the 'byebug' for this issue
-        # 1. I put a byebug at the very top
-        # 2. I then printed out '@current_user' and "@current_user.cookouts"
-        # 3. I then realized the 'Cookout' model isn't tied to a user anymore since everyone needs to access a given cookout
-
-        cookout = Cookout.create!(cookout_params)
-        render json: cookout, status: :created
+        concert_ticket = Concert_Ticket.create!(concert_ticket_params)
+        render json: concert_ticket, status: :created
     end
 
     def update
-        cookout = Cookout.find_by(id: params[:id])
+        concert_ticket = Concert_Ticket.find_by(id: params[:id])
         user_id = @current_user.id
 
-        if cookout.users.find_by(id: user_id) 
-            cookout.update(cookout_params) 
-            render json: cookout
-        # if cookout
-        #     cookout.update(cookout_params)
-        #     render json: cookout
+        if concert_ticket.users.find_by(id: user_id) 
+            concert_ticket.update(cookout_params) 
+            render json: concert_ticket
+
         else
-            render json: { errors: [cookout.errors.full_messages] }, status: :unprocessable_entity
+            render json: { errors: [concert_ticket.errors.full_messages] }, status: :unprocessable_entity
         end
     end
 
     # Add full CRUD capability for this model
     def index 
         # byebug
-        cookouts = Cookout.all
+        concert_tickets = Concert_Ticket.all
 
         if session[:user_id]
-        # if @current_user
-            render json: cookouts
+            render json: concert_tickets
         else
             render json: { errors: ["Not authorized"] }, status: :unauthorized
         end
     end
 
     def show
-        cookout = Cookout.find_by(id: params[:id])
-        if cookout 
-            render json: cookout
+        concert_ticket = Concert_Ticket.find_by(id: params[:id])
+        if concert_ticket 
+            render json: concert_ticket
         else
-            render json: { error: "Cookout not found" }
+            render json: { error: "Concert Ticket not found" }
         end
     end
 
@@ -61,11 +49,11 @@ class ConcertTicketsController < ApplicationController
     # However, I can still add an 'else' section to provide a 'status' 400 in this scenario
 
     def destroy 
-        cookout = Cookout.find_by(id: params[:id])
+        concert_ticket = Concert_Ticket.find_by(id: params[:id])
         user_id = @current_user.id
         
-        if cookout.users.find_by(id: user_id) 
-            cookout.destroy
+        if concert_ticket.users.find_by(id: user_id) 
+            concert_ticket.destroy
             head :no_content
         else
             render json: { error: "Bad request, cannot be deleted" }, status: 400
@@ -75,7 +63,7 @@ class ConcertTicketsController < ApplicationController
     # Custom
     private 
 
-    def cookout_params
+    def concert_ticket_params
         # byebug
         params.permit(:name, :start_time, :end_time)
     end
