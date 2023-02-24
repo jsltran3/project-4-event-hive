@@ -1,8 +1,4 @@
 class ConcertTicketsController < ApplicationController
-end
-
-
-class CookoutsController < ApplicationController
     def create 
         # byebug
 
