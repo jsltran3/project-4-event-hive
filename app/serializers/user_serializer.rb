@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
 end
 
 
-attributes :id, :username
+attributes :id, :user_name
 
 has_many :bands
 has_many :concert_tickets, through: :bands

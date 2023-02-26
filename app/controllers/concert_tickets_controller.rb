@@ -10,7 +10,7 @@ class ConcertTicketsController < ApplicationController
         user_id = @current_user.id
 
         if concert_ticket.users.find_by(id: user_id) 
-            concert_ticket.update(cookout_params) 
+            concert_ticket.update(concert_ticket_params) 
             render json: concert_ticket
 
         else
