@@ -1,9 +1,9 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :user_name, :password_digest
+  attributes :id, :username, :password_digest
 end
 
 
-attributes :id, :user_name
+attributes :id, :username
 
 has_many :bands
 has_many :concert_tickets, through: :bands

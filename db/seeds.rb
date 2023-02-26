@@ -10,4 +10,4 @@ ConcertTicket.delete_all()
 Band.delete_all()
 User.delete_all()
 
-joe = User.create(user_name: "test", password: "test")
+joe = User.create(username: "test", password: "test")
