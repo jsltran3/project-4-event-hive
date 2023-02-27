@@ -29,7 +29,7 @@ class BandsController < ApplicationController
 
     def show
         band = @current_user.bands.find_by(id: params[:id])
-        if food 
+        if band 
             render json: band
         else
             render json: { error: "Band not found" }
