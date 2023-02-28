@@ -1,54 +1,93 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-
-const linkStyles = {
-  display: "inline-block",
-  width: "50px",
-  padding: "12px",
-  margin: "0 6px 6px",
-  background: "blue",
-  textDecoration: "none",
-  color: "white",
-};
+import React, { useState, useContext, createContext } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Button } from "../styles";
 
 function NavBar() {
+  function handleLogoutClick() {
+    fetch("/logout", { method: "DELETE" }).then((r) => {
+      if (r.ok) {
+        setUser(null);
+      }
+    });
+  }
   return (
-    <div>
-      <NavLink
-        to="/"
-        /* set exact so it knows to only set activeStyle when route is deeply equal to link */
-        exact
-        /* add styling to Navlink */
-        style={linkStyles}
-        /* add prop for activeStyle */
-        activeStyle={{
-          background: "darkblue",
-        }}
-      >
-        Home
-      </NavLink>
-      <NavLink
-        to="/signup"
-        exact
-        style={linkStyles}
-        activeStyle={{
-          background: "darkblue",
-        }}
-      >
-        Sign Up
-      </NavLink>
-      <NavLink
-        to="/login"
-        exact
-        style={linkStyles}
-        activeStyle={{
-          background: "darkblue",
-        }}
-      >
-        Login
-      </NavLink>
-    </div>
+    <>
+      <Wrapper>
+        <Logo>
+          <h1>Craig's Cookout</h1>
+        </Logo>
+        <Nav>
+          <Button as={Link} to="/about">
+            About
+          </Button> 
+          <Button as={Link} to="/cookouts">
+            Cookouts
+          </Button>
+          <Button as={Link} to="/foods">
+            Foods
+          </Button>
+          <Button as={Link} to="/viewcookouts">
+            View All Cookouts
+          </Button>
+          <Button variant="outline" onClick={handleLogoutClick}>
+            Logout
+          </Button>
+        </Nav>
+      </Wrapper>
+    </>
   );
 }
 
+// This is what will utilize the 'useContext' hook to change the theme of the app dependent upon the time of day:
+// function ThemeDiv() {
+//   return (
+//       <div>
+//         styled.div`background-color: ${currentTheme.background};`
+//       </div>
+//   );
+// }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+`;
+
+const Logo = styled.h1`
+  font-family: "Permanent Marker", cursive;
+  font-size: 2rem;
+  color: red;
+  margin: 0;
+  line-height: 1;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+`;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 4px;
+  position: absolute;
+  left: 20px;
+`;
+
 export default NavBar;
+
+// function ThemeDiv({ currentHour }) {
+//     // const theme = useContext(ThemeContext)
+
+// const themedDiv = 
+//       styled.div`
+//           background-color: ${theme.light.background}
+//     `;
+
+//     const themedDiv = styled.div`
+//       background-color: black;
+//     `
+
+//     return themedDiv;
+// }
