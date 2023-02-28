@@ -1,10 +1,10 @@
-import React from "react"; 
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Routes  } from "react-router-dom";
 import './App.css';
-import Login from './Login.js';
-import Home from './Home.js';
+import Login from './Login';
+import About from './Home.js';
 import SignupForm from './SignupForm.js';
 import NavBar from './NavBar.js';
-import { BrowserRouter as Router, Switch, Route, Routes  } from "react-router-dom";
 
 
 
@@ -16,7 +16,7 @@ function App() {
       <NavBar />
         <Routes>
           <Route path="/Signup" element={ <SignupForm/> } />
-          <Route path="/" element={ <Home/> } />
+          <Route path="/" element={ <About/> } />
           <Route path="/Login" element={ <Login/> } />
         </Routes>
     </div>

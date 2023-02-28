@@ -1,13 +1,13 @@
 import React from "react"; 
 
-function About() {
+function Band() {
 
     return (
         <div>
-            <p>I am About</p>
+            <p>I am Band</p>
         </div>
     )
 }
 
 
-export default About;
+export default Band;
