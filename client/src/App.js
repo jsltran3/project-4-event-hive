@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Routes  } from "react-router-do
 import './App.css';
 import Login from './Login';
 import About from './Home.js';
-import SignupForm from './SignupForm.js';
+import SignupForm from './LoginForm.js';
 import NavBar from './NavBar.js';
 
 
