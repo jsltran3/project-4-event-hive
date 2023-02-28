@@ -1,9 +1,9 @@
 import React, { useState, useContext, createContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "../styles";
+import { Button } from "./styles";
 
-function NavBar() {
+function NavBar({ user, setUser }) {
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -15,20 +15,20 @@ function NavBar() {
     <>
       <Wrapper>
         <Logo>
-          <h1>Craig's Cookout</h1>
+          <h1>Event Hive</h1>
         </Logo>
         <Nav>
           <Button as={Link} to="/about">
             About
           </Button> 
-          <Button as={Link} to="/cookouts">
-            Cookouts
+          <Button as={Link} to="/concerttickets">
+            Concert Tickets
           </Button>
-          <Button as={Link} to="/foods">
-            Foods
+          <Button as={Link} to="/bands">
+            Bands
           </Button>
-          <Button as={Link} to="/viewcookouts">
-            View All Cookouts
+          <Button as={Link} to="/viewconcerttickets">
+            View All Concert Tickets
           </Button>
           <Button variant="outline" onClick={handleLogoutClick}>
             Logout
