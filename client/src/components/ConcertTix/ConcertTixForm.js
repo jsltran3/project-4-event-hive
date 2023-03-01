@@ -1,51 +1,53 @@
 import React, { useState } from "react";
 
-function ConcertTixForm ({ user, handleAddMsg}){
-  const [submitMsg, setSubmitMsg] = useState({
-    chirp_message: '',
-    chirper_profile_id: user.id,
-    like: false
-  })
-	
+function ConcertTixForm({ onAddConcertTicket }) {
+    const [createConcertTicketFormData, setCreateConcertTicketFormData] = useState({
+        name: "",
+        start_time: "",
+        end_time: ""
+    });
 
-  const handleChange = (event) => {
-    setSubmitMsg({...submitMsg, [event.target.name]: event.target.value})
-};
+    const handleCreateConcertTicketChange = (e) => {
+        setCreateConcertTicketFormData({...createConcertTicketFormData, [e.target.name]: e.target.value})
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch('http://localhost:9292/chirp', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(submitMsg)
-    })
-    .then(r => r.json())
-    .then(chirp => {
-      handleAddMsg(chirp);
-      setSubmitMsg({
-        chirper_message: '',
-        like: false
-      })
-    })
-    
-  }
+    const handleCreateConcertTicketFormSubmit = (e) => {
+        e.preventDefault();
+        // NOTE: The 'Application Controller' will handle the '@current_user' so that it already knows the session["user_id"] to use in this scenario
+        // Therefore, all you need to do is pass in a fetch request to the '/concertTickets' route:
+        fetch("/concertTickets", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({ "name": createConcertTicketFormData["name"], "start_time": createConcertTicketFormData["start_time"], "end_time": createConcertTicketFormData["end_time"] }),
+        })
+        .then((response) => response.json())
+        // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
+        .then((newConcertTicket) => onAddConcertTicket(newConcertTicket));
+    }
 
-  return(
-    <div>
-        <form className='Form-submission' onSubmit={handleSubmit}>
-          <input 
-            type='chirp_message' 
-            placeholder='Chirp' 
-            name='chirp_message' 
-            value={submitMsg.chirp_message} 
-            onChange={handleChange} required/>
-          <button className='Form-button'>Chirp!</button>
-        </form>
-    </div>
-  )
+    return (
+        <div>
+            <h2>Add New ConcertTicket</h2>
+            <form onSubmit={handleCreateConcertTicketFormSubmit}>
+                <label htmlFor="name">Name of ConcertTicket:</label>
+                <br />
+                <input onChange={handleCreateConcertTicketChange} type="text" id="name" name="name"/>
+                <br />
+                <label htmlFor="start_time">Start Time of ConcertTicket:</label>
+                <br />
+                <input onChange={handleCreateConcertTicketChange}  type="text" id="start_time" name="start_time"/>
+                <br />
+                <label htmlFor="end_time">End Time of ConcertTicket:</label>
+                <br />
+                <input onChange={handleCreateConcertTicketChange} type="text" id="end_time" name="end_time"/>
+                <br />
+                <input type="submit"/>
+            </form>
+        </div>
+    )
 
 }
 
