@@ -1,75 +1,60 @@
 import React, { useState } from "react"; 
-// import styled from "styled-components";
+import styled from "styled-components";
 import LoginForm from "./LoginForm.js";
-import SignupForm from "./LoginForm.js";
-// import { Button } from "../styles";
+import SignUpForm from "./SignUpForm.js";
+import { Button } from "./styles";
 
 
-//puttinh it all togethet
-function Login() {
-	const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+function Login({ onLogin }) {
+  const [showLogin, setShowLogin] = useState(true);
 
-	function handleSubmit(e) {
-    // e.preventDefault();
-    // setIsLoading(true);
-    // fetch("/login", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ username, password }),
-    // }).then((r) => {
-    //   setIsLoading(false);
-    //   if (r.ok) {
-    //     r.json().then((user) => onLogin(user));
-    //   } else {
-    //     r.json().then((err) => setErrors(err.errors));
-    //   }
-    // });
-  }
-
-    return (
-
-      <div>
-        <p>I am login</p>
-			<form onSubmit={handleSubmit}>
-      <label>Username</label>
-        <input
-          type="text"
-          id="username"
-          autoComplete="off"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      
-      
-      <label>Password</label>
-        <input
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      
-      
-        <button variant="fill" color="primary" type="submit">
-          {isLoading ? "Loading..." : "Login"}
-        </button>
-      
-      
-        {/* {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))} */}
-      
-    </form>
-    </div>
+  return (
+    <Wrapper>
+      <Logo>Craig's Cookout</Logo>
+      {showLogin ? (
+        <>
+          <LoginForm onLogin={onLogin} />
+          <Divider />
+          <p>
+            Don't have an account? &nbsp;
+            <Button color="secondary" onClick={() => setShowLogin(false)}>
+              Sign Up
+            </Button>
+          </p>
+        </>
+      ) : (
+        <>
+          <SignUpForm onLogin={onLogin} />
+          <Divider />
+          <p>
+            Already have an account? &nbsp;
+            <Button color="secondary" onClick={() => setShowLogin(true)}>
+              Log In
+            </Button>
+          </p>
+        </>
+      )}
+    </Wrapper>
   );
-  
 }
 
+const Logo = styled.h1`
+  font-family: "Permanent Marker", cursive;
+  font-size: 3rem;
+  color: red;
+  margin: 8px 0 16px;
+`;
+
+const Wrapper = styled.section`
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 16px;
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 16px 0;
+`;
 
 export default Login;

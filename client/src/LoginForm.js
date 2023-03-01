@@ -1,56 +1,65 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
+import { Button, Error, Input, FormField, Label } from "./styles";
 
-function LoginForm() {
-	// ingestion 
-	const [userName, setUserName] = useState(''); 
-	const [password, setPassword ] = useState('');
+function LoginForm({ onLogin }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-	//error checking states 
-	const [submitted, setSubmitted] = useState(false);
-	const [error, setError] = useState(false); 
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    }).then((r) => {
+      setIsLoading(false);
+      if (r.ok) {
+        r.json().then((user) => onLogin(user));
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+  }
 
-	// name change handler
-	const handleUserName = (e) => {
-		setUserName(e.target.value);
-		setSubmitted(false);
-	}
-
-	// name change handler
-	const handlePassword = (e) => {
-		setUserName(e.target.value);
-		setSubmitted(false);
-	}
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (userName === '' || password === '') {
-		setError(true);
-		} else {
-		setSubmitted(true);
-		setError(false);
-		}
-		};
-
-	return (
-		<div>
-			<p>I am sign up!</p>
-			<form>
-{/* Labels and inputs for form data */}
-<label className="label">Name</label>
-<input onChange={handleUserName} className="input"
-value={userName} type="text" />
-
-<label className="label">Password</label>
-<input onChange={handlePassword} className="input"
-value={password} type="password" />
-
-<button onClick={handleSubmit} className="btn" type="submit">
-Submit
-</button>
-</form>
-		</div>
-	);
+  return (
+    <form onSubmit={handleSubmit}>
+      <FormField>
+        <Label htmlFor="username">Username</Label>
+        <Input
+          type="text"
+          id="username"
+          autoComplete="off"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </FormField>
+      <FormField>
+        <Label htmlFor="password">Password</Label>
+        <Input
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </FormField>
+      <FormField>
+        <Button variant="fill" color="primary" type="submit">
+          {isLoading ? "Loading..." : "Login"}
+        </Button>
+      </FormField>
+      <FormField>
+        {errors.map((err) => (
+          <Error key={err}>{err}</Error>
+        ))}
+      </FormField>
+    </form>
+  );
 }
-	
-export default LoginForm;
 
+export default LoginForm;
