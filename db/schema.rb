@@ -10,20 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_26_044103) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 2023_02_26_040826) do
 
   create_table "bands", force: :cascade do |t|
     t.string "name"
+    t.integer "user_id", null: false
+    t.integer "concert_ticket_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "band_id", null: false
-    t.integer "user_id", null: false
-    # t.index [“concert_tickets_id"], name: "index_bandss_on_concert_tickets_id"
-    # t.index ["user_id"], name: "index_bandss_on_user_id"
-
+    t.index ["concert_ticket_id"], name: "index_bands_on_concert_ticket_id"
+    t.index ["user_id"], name: "index_bands_on_user_id"
   end
 
   create_table "concert_tickets", force: :cascade do |t|
@@ -33,10 +29,12 @@ ActiveRecord::Schema.define(version: 2023_02_26_044103) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "username"
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "username"
   end
 
+  add_foreign_key "bands", "concert_tickets"
+  add_foreign_key "bands", "users"
 end

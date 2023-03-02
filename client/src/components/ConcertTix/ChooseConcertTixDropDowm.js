@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChooseConcertTicketForm({ concertTickets, onChooseCookout}) {
+function ChooseConcertTicketForm({ concertTickets, onChooseConcertTicket}) {
     console.log("Concert Tickets in ChooseConcertTicketForm: ", concertTickets);
     // let concertTicketOptionsArray = [];
 
@@ -35,4 +35,4 @@ function ChooseConcertTicketForm({ concertTickets, onChooseCookout}) {
     )
 }
 
-export default ChooseCookoutForm;
+export default ChooseConcertTicketForm;

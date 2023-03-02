@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChooseConcertTixDropDowm from "./ConcertTix/ChooseConcertTixDropDowm";
+import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [createBandFormData, setCreateBandFormData] = useState({
@@ -30,7 +30,7 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 
     return (
         <div>
-            <ChooseConcertTicketDropdown concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} />
+            <ChooseConcertTixDropDowm concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} />
             <h2>Add New Band</h2>
             <form>
                 <label htmlFor="name">Name of Band:</label>
