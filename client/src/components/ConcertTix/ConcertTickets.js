@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ConcertTixForm from "./ConcertTixForm";
-import EditConcertTixForm from "./EditConcertTixForm"
+import EditConcertTixForm from "./EditConcertTixForm.js"
 
 function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTicket, onEditConcertTicket, onDeleteConcertTicket, onChooseConcertTicket, chosenConcertTicket}) {
     // NOTE:
@@ -40,7 +40,7 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
             <br />
             { 
                 showAdd  &&
-                <AddConcertTicketForm 
+                <ConcertTixForm 
                     onAddConcertTicket={onAddConcertTicket} 
                 />
             }
@@ -50,7 +50,7 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
             }
             {   
                 showEdit &&
-                <EditConcertTicketForm 
+                <EditConcertTixForm 
                     onEditConcertTicket={onEditConcertTicket} onDeleteConcertTicket={onDeleteConcertTicket} 
                     concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} chosenConcertTicket={chosenConcertTicket} 
                 />
@@ -59,4 +59,4 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
     )
 }
 
-export default ConcertTicket;
+export default ConcertTickets;

@@ -1,83 +1,79 @@
-import React from "react"; 
-import ChooseConcertTixDropDowm from "./ChooseConcertTixDropDowm";
+import React, { useEffect, useState } from "react";
+import ChooseCookoutDropdown from "../cookout/ChooseCookoutDropdown";
 
-function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, conertTickets, onChooseConcertTicket, chosenConcertTicket }) {
-    const [editbandFormData, setEditbandFormData] = useState({
-        band_name: ""
+function EditCookoutForm({ cookouts, onChooseCookout, onEditCookout, onDeleteCookout, chosenCookout }) {
+    useEffect(() => {
+        setEditCookoutFormData({
+            name: chosenCookout.name,
+            start_time: chosenCookout.start_time,
+            end_time: chosenCookout.end_time
+        })
+    }, [chosenCookout]);
+
+    const [editCookoutFormData, setEditCookoutFormData] = useState({
+        name: chosenCookout.name,
+        start_time: chosenCookout.start_time,
+        end_time: chosenCookout.end_time
     });
 
-    function handleChooseband(e) {
-        let mapMatch = bandOptions.find(item => {
-            return item.props.value === e.target.value
-        });
-
-        let bandMatch = mapMatch.props.value;
-
-        setEditbandFormData({"band_name": bandMatch});
-
-        let chosenConcertTicketBandsMatch = chosenConcertTicket.bands.find(band => band.name === bandMatch);
-
-        // From this StackOverflow example:
-        // https://stackoverflow.com/questions/8668174/indexof-method-in-an-object-array
-        let chosenbandIndex = chosenConcertTicket.bands.map(band => band.name).indexOf(bandMatch);
-
-        let chBandbandId = chosenConcertTicketbandsMatch.id;
-        onChangeBandInfo(chosenbandId, chosenbandIndex);
-    }
-
-    const handleEditbandChange = (e) => {
-        setEditbandFormData({...editbandFormData, [e.target.name]: e.target.value})
-    }
+    const handleEditCookoutChange = (e) => {
+        setEditCookoutFormData({...editCookoutFormData, [e.target.name]: e.target.value})
+    };
 
     const handleEdit = (e) => {
         e.preventDefault();
 
-        const concertTicketId = chosenConcertTicket.id;
+        const id = chosenCookout.id;
 
-        // From 'rails routes' within 'rails c' console:
-        //  PATCH  /conertTickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
-        fetch(`/conertTickets/${concertTicketId}/bands/${bandId}`, {
+        fetch(`/cookouts/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
             },
-            body: JSON.stringify({"name": editBandFormData["band_name"], "concertticket_id": concertTicketId}),
+            body: JSON.stringify({ "name": editCookoutFormData["name"], "start_time": editCookoutFormData["start_time"], "end_time": editCookoutFormData["end_time"] }),
         })
         .then((response) => response.json())
-        .then((editedband) => onEditBand(editedband))
+        // NOTE: This is done to send up the edited cookout up to the parent component, 'App.js', accordingly:
+        .then((editedCookout) => onEditCookout(editedCookout));
     }
 
     const handleDelete = (e) => {
         e.preventDefault();
-        const concertTicketId = chosenConcertTicket.id;
+        const id = chosenCookout.id;
 
-        fetch(`/conertTickets/${concertTicketId}/bands/${bandId}`, {
+        console.log("handleDelete function called in EditCookoutForm child component");
+        console.log("id: ", id);
+
+        fetch(`/cookouts/${id}`, {
             method: "DELETE",
         })
         .then((response) => {
+            // NOTE: This checks the response, and then sends back the chosenCookout up to the parent to be deleted by the handler function:
+            console.log("response from deletion action: ", response);
+            console.log("response.ok: ", response.ok);
             if (response.ok) {
-                onDeleteBand(response, bandId);
+                onDeleteCookout(chosenCookout);
             }
         })
     }
 
     return (
         <div>
-            <ChooseConcertTixDropDowm conertTickets={conertTickets} onChooseConcertTicket={onChooseConcertTicket} />
-            <h2>Edit band</h2>
+            <ChooseCookoutDropdown cookouts={cookouts} onChooseCookout={onChooseCookout} />
+            <h2>Edit Cookout</h2>
             <form>
-                <label htmlFor="band_select">Choose a Band:</label>
+                <label htmlFor="name">Name of Cookout:</label>
                 <br />
-                <select name="band_select" id="band_select" onChange={handleChooseband}>
-                    <option disabled selected value> -- Select a band -- </option>
-                    { bandOptions }
-                </select>
+                <input onChange={handleEditCookoutChange} type="text" id="name" name="name" value={editCookoutFormData.name}/>
                 <br />
+                <label htmlFor="start_time">Start Time of Cookout:</label>
                 <br />
-                <label htmlFor="name">Name of Band:</label>
+                <input onChange={handleEditCookoutChange}  type="text" id="start_time" name="start_time" value={editCookoutFormData.start_time}/>
                 <br />
-                <input onChange={handleEditbandChange} type="text" id="name" name="band_name" value={editbandFormData.band_name}/>
+                <label htmlFor="end_time">End Time of Cookout:</label>
+                <br />
+                <input onChange={handleEditCookoutChange} type="text" id="end_time" name="end_time" value={editCookoutFormData.end_time}/>
                 <br />
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />
@@ -88,4 +84,4 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
     )
 }
 
-export default EditbandForm;
+export default EditCookoutForm;
