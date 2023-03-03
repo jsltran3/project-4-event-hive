@@ -1,79 +1,79 @@
 import React, { useEffect, useState } from "react";
-import ChooseCookoutDropdown from "../cookout/ChooseCookoutDropdown";
+import ChooseConcertTicketDropdown from "./ChooseConcertTixDropDowm.js"
 
-function EditCookoutForm({ cookouts, onChooseCookout, onEditCookout, onDeleteCookout, chosenCookout }) {
+function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditConcertTicket, onDeleteConcertTicket, chosenConcertTicket }) {
     useEffect(() => {
-        setEditCookoutFormData({
-            name: chosenCookout.name,
-            start_time: chosenCookout.start_time,
-            end_time: chosenCookout.end_time
+        setEditConcertTicketFormData({
+            name: chosenConcertTicket.name,
+            start_time: chosenConcertTicket.start_time,
+            end_time: chosenConcertTicket.end_time
         })
-    }, [chosenCookout]);
+    }, [chosenConcertTicket]);
 
-    const [editCookoutFormData, setEditCookoutFormData] = useState({
-        name: chosenCookout.name,
-        start_time: chosenCookout.start_time,
-        end_time: chosenCookout.end_time
+    const [editConcertTicketFormData, setEditConcertTicketFormData] = useState({
+        name: chosenConcertTicket.name,
+        start_time: chosenConcertTicket.start_time,
+        end_time: chosenConcertTicket.end_time
     });
 
-    const handleEditCookoutChange = (e) => {
-        setEditCookoutFormData({...editCookoutFormData, [e.target.name]: e.target.value})
+    const handleEditConcertTicketChange = (e) => {
+        setEditConcertTicketFormData({...editConcertTicketFormData, [e.target.name]: e.target.value})
     };
 
     const handleEdit = (e) => {
         e.preventDefault();
 
-        const id = chosenCookout.id;
+        const id = chosenConcertTicket.id;
 
-        fetch(`/cookouts/${id}`, {
+        fetch(`/concertTickets/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: JSON.stringify({ "name": editCookoutFormData["name"], "start_time": editCookoutFormData["start_time"], "end_time": editCookoutFormData["end_time"] }),
+            body: JSON.stringify({ "name": editConcertTicketFormData["name"], "start_time": editConcertTicketFormData["start_time"], "end_time": editConcertTicketFormData["end_time"] }),
         })
         .then((response) => response.json())
-        // NOTE: This is done to send up the edited cookout up to the parent component, 'App.js', accordingly:
-        .then((editedCookout) => onEditCookout(editedCookout));
+        // NOTE: This is done to send up the edited concertTicket up to the parent component, 'App.js', accordingly:
+        .then((editedConcertTicket) => onEditConcertTicket(editedConcertTicket));
     }
 
     const handleDelete = (e) => {
         e.preventDefault();
-        const id = chosenCookout.id;
+        const id = chosenConcertTicket.id;
 
-        console.log("handleDelete function called in EditCookoutForm child component");
+        console.log("handleDelete function called in EditConcertTicketForm child component");
         console.log("id: ", id);
 
-        fetch(`/cookouts/${id}`, {
+        fetch(`/concertTickets/${id}`, {
             method: "DELETE",
         })
         .then((response) => {
-            // NOTE: This checks the response, and then sends back the chosenCookout up to the parent to be deleted by the handler function:
+            // NOTE: This checks the response, and then sends back the chosenConcertTicket up to the parent to be deleted by the handler function:
             console.log("response from deletion action: ", response);
             console.log("response.ok: ", response.ok);
             if (response.ok) {
-                onDeleteCookout(chosenCookout);
+                onDeleteConcertTicket(chosenConcertTicket);
             }
         })
     }
 
     return (
         <div>
-            <ChooseCookoutDropdown cookouts={cookouts} onChooseCookout={onChooseCookout} />
-            <h2>Edit Cookout</h2>
+            <ChooseConcertTicketDropdown concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} />
+            <h2>Edit ConcertTicket</h2>
             <form>
-                <label htmlFor="name">Name of Cookout:</label>
+                <label htmlFor="name">Name of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditCookoutChange} type="text" id="name" name="name" value={editCookoutFormData.name}/>
+                <input onChange={handleEditConcertTicketChange} type="text" id="name" name="name" value={editConcertTicketFormData.name}/>
                 <br />
-                <label htmlFor="start_time">Start Time of Cookout:</label>
+                <label htmlFor="start_time">Start Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditCookoutChange}  type="text" id="start_time" name="start_time" value={editCookoutFormData.start_time}/>
+                <input onChange={handleEditConcertTicketChange}  type="text" id="start_time" name="start_time" value={editConcertTicketFormData.start_time}/>
                 <br />
-                <label htmlFor="end_time">End Time of Cookout:</label>
+                <label htmlFor="end_time">End Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditCookoutChange} type="text" id="end_time" name="end_time" value={editCookoutFormData.end_time}/>
+                <input onChange={handleEditConcertTicketChange} type="text" id="end_time" name="end_time" value={editConcertTicketFormData.end_time}/>
                 <br />
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />
@@ -84,4 +84,4 @@ function EditCookoutForm({ cookouts, onChooseCookout, onEditCookout, onDeleteCoo
     )
 }
 
-export default EditCookoutForm;
+export default EditConcertTicketForm;

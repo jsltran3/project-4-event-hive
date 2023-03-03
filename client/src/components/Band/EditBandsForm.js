@@ -1,5 +1,5 @@
 import React, { useState } from "react"; 
-import ChooseConcertTixDropDowm from "./ChooseConcertTixDropDowm";
+import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
 
 function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, conertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [editBandFormData, setEditBandFormData] = useState({
@@ -88,4 +88,4 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
     )
 }
 
-export default EditbandForm;
+export default EditBandForm;

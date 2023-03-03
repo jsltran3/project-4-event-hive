@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChooseConcertTicketForm({ concertTickets, onChooseConcertTicket}) {
+function ChooseConcertTixDropDowm({ concertTickets, onChooseConcertTicket}) {
     console.log("Concert Tickets in ChooseConcertTicketForm: ", concertTickets);
     // let concertTicketOptionsArray = [];
 
@@ -35,4 +35,4 @@ function ChooseConcertTicketForm({ concertTickets, onChooseConcertTicket}) {
     )
 }
 
-export default ChooseConcertTicketForm;
+export default ChooseConcertTixDropDowm;
