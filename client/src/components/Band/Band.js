@@ -4,6 +4,9 @@ import EditBandForm from "./EditBandsForm.js";
 
 function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket, onFetchConcertTickets }) {
 
+    const [showAdd, setShowAdd] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+
     useEffect(() => {
         fetch("/concerttickets", {
         method: "GET",
@@ -17,9 +20,6 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
             onFetchConcertTickets(data);
         });
     }, []);
-
-    const [showAdd, setShowAdd] = useState(false);
-    const [showEdit, setShowEdit] = useState(false);
 
     function toggleAddBands() {
         setShowAdd(!showAdd);
@@ -50,9 +50,15 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
             {
                 showEdit&&
                 <EditBandForm 
-                    bandOptions={bandOptions} setBandOptions={setBandOptions} bandId={bandId} setBandId={setBandId} onChangeBandInfo={onChangeBandInfo}
-                    onEditBand={onEditBand} onDeleteBand={onDeleteBand} 
-                    concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} chosenConcertTicket={chosenConcertTicket}
+                    bandOptions={bandOptions} 
+										setBandOptions={setBandOptions} 
+										bandId={bandId} setBandId={setBandId} 
+										onChangeBandInfo={onChangeBandInfo}
+                    onEditBand={onEditBand} 
+										onDeleteBand={onDeleteBand} 
+                    concertTickets={concertTickets} 
+										onChooseConcertTicket={onChooseConcertTicket} 
+										chosenConcertTicket={chosenConcertTicket}
                 />
             }
         </div>

@@ -65,15 +65,29 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             <form>
                 <label htmlFor="name">Name of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditConcertTicketChange} type="text" id="name" name="name" value={editConcertTicketFormData.name}/>
+                <input onChange={handleEditConcertTicketChange} 
+									type="text" 
+									id="name" 
+									name="name" 
+									value={editConcertTicketFormData.name}/>
                 <br />
                 <label htmlFor="start_time">Start Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditConcertTicketChange}  type="text" id="start_time" name="start_time" value={editConcertTicketFormData.start_time}/>
+                <input 
+									onChange={handleEditConcertTicketChange}  
+									type="text" 
+									id="start_time" 
+									name="start_time" 
+									value={editConcertTicketFormData.start_time}/>
                 <br />
                 <label htmlFor="end_time">End Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleEditConcertTicketChange} type="text" id="end_time" name="end_time" value={editConcertTicketFormData.end_time}/>
+                <input 
+									onChange={handleEditConcertTicketChange} 
+									type="text" 
+									id="end_time" 
+									name="end_time" 
+									value={editConcertTicketFormData.end_time}/>
                 <br />
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Routes  } from "react-router-dom";
 import Login from './Login';
-import About from './Home.js';
-import SignupForm from './LoginForm.js';
+import About from './About.js';
+import SignupForm from './SignUpForm';
 import NavBar from './NavBar.js';
 import ConcertTicket from "./components/ConcertTix/ConcertTickets";
 import Band from "./components/Band/Band";
@@ -152,16 +152,30 @@ function App() {
         <Route 
           path="/concertTickets" 
           element={<ConcertTicket 
-            concertTickets={concertTickets} onFetchConcertTickets={handleFetchConcertTickets} onChooseConcertTicket={handleChooseConcertTicket} chosenConcertTicket={chosenConcertTicket}
-            onAddConcertTicket={handleAddConcertTicket} onEditConcertTicket={handleEditConcertTicket} onDeleteConcertTicket={handleDeleteConcertTicket} 
+            concertTickets={concertTickets} 
+            onFetchConcertTickets={handleFetchConcertTickets} 
+            onChooseConcertTicket={handleChooseConcertTicket} 
+            chosenConcertTicket={chosenConcertTicket}
+            onAddConcertTicket={handleAddConcertTicket} 
+            onEditConcertTicket={handleEditConcertTicket} 
+            onDeleteConcertTicket={handleDeleteConcertTicket} 
           />}
         />
         <Route 
           path="/bands" 
           element={<Band 
-            concertTickets={concertTickets} onChooseConcertTicket={handleChooseConcertTicket} chosenConcertTicket={chosenConcertTicket} onFetchConcertTickets={handleFetchConcertTickets}
-            onAddFood={handleAddBand} foodOptions={bandOptions} setBandOptions={setBandOptions} bandId={bandId} setBandId={setBandId} onChangeBandInfo={handleChangeBandInfo}
-            onEditFood={handleEditBand} onDeleteBand={handleDeleteBand} 
+            concertTickets={concertTickets} 
+            onChooseConcertTicket={handleChooseConcertTicket} 
+            chosenConcertTicket={chosenConcertTicket} 
+            onFetchConcertTickets={handleFetchConcertTickets}
+            onAddFood={handleAddBand} 
+            foodOptions={bandOptions} 
+            setBandOptions={setBandOptions} 
+            bandId={bandId} 
+            setBandId={setBandId} 
+            onChangeBandInfo={handleChangeBandInfo}
+            onEditFood={handleEditBand} 
+            onDeleteBand={handleDeleteBand} 
           />}
         />
         <Route 

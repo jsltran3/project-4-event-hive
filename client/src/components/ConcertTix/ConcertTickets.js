@@ -51,8 +51,11 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
             {   
                 showEdit &&
                 <EditConcertTixForm 
-                    onEditConcertTicket={onEditConcertTicket} onDeleteConcertTicket={onDeleteConcertTicket} 
-                    concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} chosenConcertTicket={chosenConcertTicket} 
+                    onEditConcertTicket={onEditConcertTicket} 
+										onDeleteConcertTicket={onDeleteConcertTicket} 
+                    concertTickets={concertTickets} 
+										onChooseConcertTicket={onChooseConcertTicket} 
+										chosenConcertTicket={chosenConcertTicket} 
                 />
             }
         </div>

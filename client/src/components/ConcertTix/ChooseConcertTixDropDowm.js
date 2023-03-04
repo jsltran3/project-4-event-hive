@@ -17,7 +17,10 @@ function ChooseConcertTixDropDowm({ concertTickets, onChooseConcertTicket}) {
             <form>
                 <label htmlFor="choose_concertTicket">Choose a Concert Ticket:</label>
                 <br />
-                <select name="choose_concertTicket" id="choose_concertTicket" onChange={onChooseConcertTicket}>
+                <select 
+									name="choose_concertTicket" 
+									id="choose_concertTicket" 
+									onChange={onChooseConcertTicket}>
                     <option disabled selected value> -- Select a concertTicket -- </option>
                     { concertTicketOptionsArray }
                 </select>

@@ -34,15 +34,27 @@ function ConcertTixForm({ onAddConcertTicket }) {
             <form onSubmit={handleCreateConcertTicketFormSubmit}>
                 <label htmlFor="name">Name of ConcertTicket:</label>
                 <br />
-                <input onChange={handleCreateConcertTicketChange} type="text" id="name" name="name"/>
+                <input 
+									onChange={handleCreateConcertTicketChange} 
+									type="text" 
+									id="name" 
+									name="name"/>
                 <br />
                 <label htmlFor="start_time">Start Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleCreateConcertTicketChange}  type="text" id="start_time" name="start_time"/>
+                <input 
+									onChange={handleCreateConcertTicketChange}  
+									type="text" 
+									id="start_time" 
+									name="start_time"/>
                 <br />
                 <label htmlFor="end_time">End Time of ConcertTicket:</label>
                 <br />
-                <input onChange={handleCreateConcertTicketChange} type="text" id="end_time" name="end_time"/>
+                <input 
+									onChange={handleCreateConcertTicketChange} 
+									type="text" 
+									id="end_time" 
+									name="end_time"/>
                 <br />
                 <input type="submit"/>
             </form>
