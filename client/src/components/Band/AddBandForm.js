@@ -15,7 +15,7 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
         const id = chosenConcertTicket.id;
         // NOTE: The 'Application Controller' will handle the '@current_user' so that it already knows the session["user_id"] to use in this scenario
         // Therefore, all you need to do is pass in a fetch request to the '/concertTickets' route:
-        fetch(`/concertTickets/${id}/bands`, {
+        fetch(`/concerttickets/${id}/bands`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

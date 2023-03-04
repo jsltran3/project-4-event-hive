@@ -3,11 +3,9 @@ import AddBandForm from "./AddBandForm.js";
 import EditBandForm from "./EditBandsForm.js";
 
 function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket, onFetchConcertTickets }) {
-    // NOTE:
-    // Make another fetch request just in case the the user decides to click on 'Bands' first before entering anything
-    // to avoid a weird workflow issue
+
     useEffect(() => {
-        fetch("/concertTickets", {
+        fetch("/concerttickets", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

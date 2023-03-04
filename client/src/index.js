@@ -1,9 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// Suggestion From Related GitHub Issues Page:
-// https://github.com/facebook/react/issues/18866
-// import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./App.js";
 // import { BrowserRouter } from "react-router-dom";
 import {  BrowserRouter, Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
@@ -24,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// This is the 'Login' lab's approach on how to handle routing:
 ReactDOM.render(
   <BrowserRouter>
     <GlobalStyle />
@@ -34,21 +30,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-// Another Attempt To Avoid Nested Browser Routes Which Did Not Work:
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <GlobalStyle />
-//     <App />
-//   </React.StrictMode>
-//   document.getElementById("root")
-// );
-
-// This is the routing that worked for me for the Phase 3 project:
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-// root.render(
-//   <BrowserRouter>
-//     <Routes>
-//       <Route path="/*" element={<App />} />
-//     </Routes>
-// </BrowserRouter>
-// );
