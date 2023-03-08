@@ -10,7 +10,7 @@ function Login({ onLogin }) {
 
   return (
     <Wrapper>
-      <Logo>Craig's Cookout</Logo>
+      <Logo>Event Hive</Logo>
       {showLogin ? (
         <>
           <LoginForm onLogin={onLogin} />
