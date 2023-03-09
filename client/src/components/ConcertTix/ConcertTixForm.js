@@ -3,8 +3,8 @@ import React, { useState } from "react";
 function ConcertTixForm({ onAddConcertTicket }) {
     const [createConcertTicketFormData, setCreateConcertTicketFormData] = useState({
         name: "",
-        start_time: "",
-        end_time: ""
+        // start_time: "",
+        // end_time: ""
     });
 
     const handleCreateConcertTicketChange = (e) => {
@@ -15,13 +15,14 @@ function ConcertTixForm({ onAddConcertTicket }) {
         e.preventDefault();
         // NOTE: The 'Application Controller' will handle the '@current_user' so that it already knows the session["user_id"] to use in this scenario
         // Therefore, all you need to do is pass in a fetch request to the '/concertTickets' route:
-        fetch("/concertTickets", {
+        fetch("/concerttickets", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: JSON.stringify({ "name": createConcertTicketFormData["name"], "start_time": createConcertTicketFormData["start_time"], "end_time": createConcertTicketFormData["end_time"] }),
+            body: JSON.stringify({ "name": createConcertTicketFormData["name"] }),
+            // body: JSON.stringify({ "name": createConcertTicketFormData["name"], "start_time": createConcertTicketFormData["start_time"], "end_time": createConcertTicketFormData["end_time"] }),
         })
         .then((response) => response.json())
         // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
@@ -40,22 +41,7 @@ function ConcertTixForm({ onAddConcertTicket }) {
 									id="name" 
 									name="name"/>
                 <br />
-                <label htmlFor="start_time">Start Time of ConcertTicket:</label>
-                <br />
-                <input 
-									onChange={handleCreateConcertTicketChange}  
-									type="text" 
-									id="start_time" 
-									name="start_time"/>
-                <br />
-                <label htmlFor="end_time">End Time of ConcertTicket:</label>
-                <br />
-                <input 
-									onChange={handleCreateConcertTicketChange} 
-									type="text" 
-									id="end_time" 
-									name="end_time"/>
-                <br />
+
                 <input type="submit"/>
             </form>
         </div>

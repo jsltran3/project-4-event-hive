@@ -13,9 +13,7 @@ function About({ user }) {
                 <li>
                     Login page where a user can create an account, and login to the site
                 </li>
-                <li>
-                    The ability to create a cookout with a start and end time
-                </li>
+
                 <li>
                     The ability to add new bands to an existing Concert memory/ticket as well as edit or delete the bands
                 </li>

@@ -149,7 +149,7 @@ function App() {
           element={<About user={user}/>} 
         />
         <Route 
-          path="/concertTickets" 
+          path="/concerttickets" 
           element={
             <ConcertTicket 
             concertTickets={concertTickets} 
