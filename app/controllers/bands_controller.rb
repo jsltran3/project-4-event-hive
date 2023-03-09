@@ -1,7 +1,7 @@
 class BandsController < ApplicationController
     def create 
  
-        food = @current_user.bands.create(band_params)
+        band = @current_user.bands.create(band_params)
       
         render json: band, status: :created
     end

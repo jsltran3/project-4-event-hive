@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function ConcertTixForm({ onAddConcertTicket }) {
     const [createConcertTicketFormData, setCreateConcertTicketFormData] = useState({
-        name: "",
+        name: ""
         // start_time: "",
         // end_time: ""
     });

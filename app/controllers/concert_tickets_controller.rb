@@ -1,12 +1,12 @@
 class ConcertTicketsController < ApplicationController
     def create 
 
-        concert_ticket = Concert_Ticket.create!(concert_ticket_params)
+        concert_ticket = ConcertTicket.create!(concert_ticket_params)
         render json: concert_ticket, status: :created
     end
 
     def update
-        concert_ticket = Concert_Ticket.find_by(id: params[:id])
+        concert_ticket = ConcertTicket.find_by(id: params[:id])
         user_id = @current_user.id
 
         if concert_ticket.users.find_by(id: user_id) 
@@ -21,7 +21,7 @@ class ConcertTicketsController < ApplicationController
     # Add full CRUD capability for this model
     def index 
         # byebug
-        concert_tickets = Concert_Ticket.all
+        concert_tickets = ConcertTicket.all
 
         if session[:user_id]
             render json: concert_tickets
@@ -31,7 +31,7 @@ class ConcertTicketsController < ApplicationController
     end
 
     def show
-        concert_ticket = Concert_Ticket.find_by(id: params[:id])
+        concert_ticket = ConcertTicket.find_by(id: params[:id])
         if concert_ticket 
             render json: concert_ticket
         else
@@ -49,7 +49,7 @@ class ConcertTicketsController < ApplicationController
     # However, I can still add an 'else' section to provide a 'status' 400 in this scenario
 
     def destroy 
-        concert_ticket = Concert_Ticket.find_by(id: params[:id])
+        concert_ticket = ConcertTicket.find_by(id: params[:id])
         user_id = @current_user.id
         
         if concert_ticket.users.find_by(id: user_id) 
