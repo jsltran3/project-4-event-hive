@@ -23,31 +23,31 @@ function NavBar({ user, setUser }) {
   //   context.updateContext({color1: "black"});
   // }
 
-  // Used these pages as references for the '/viewcookouts' route:
+  // Used these pages as references for the '/concerttickets' route:
   // https://stackoverflow.com/questions/38839510/forcing-a-react-router-link-to-load-a-page-even-if-were-already-on-that-page
   // https://stackoverflow.com/questions/38809989/react-router-link-not-causing-component-to-update-within-nested-routes
 
 
-          // <Button as={Link} onClick={() => this.forceUpdate} to="/viewcookouts"></Button>
+          // <Button as={Link} onClick={() => this.forceUpdate} to="/concerttickets"></Button>
 
   return (
     <>
       <Wrapper>
         <Logo>
-          <h1>Craig's Cookout</h1>
+          <h1>Event Hive</h1>
         </Logo>
         <Nav>
           <Button as={Link} to="/about">
             About
           </Button> 
-          <Button as={Link} to="/cookouts">
-            Cookouts
+          <Button as={Link} to="/concerttickets">
+            Concert Tickets
           </Button>
-          <Button as={Link} to="/foods">
-            Foods
+          <Button as={Link} to="/bands">
+            Bands
           </Button>
-          <Button as={Link} to="/viewcookouts">
-            View All Cookouts
+          <Button as={Link} to="/viewconcerttickets">
+            View All Concert Tickets
           </Button>
           <Button variant="outline" onClick={handleLogoutClick}>
             Logout

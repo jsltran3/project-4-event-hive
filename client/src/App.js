@@ -99,7 +99,7 @@ function App() {
         setConcertTickets(tempArray) ;
       } 
       else {
-        console.log("Match not found within 'handleAddNewFood!");
+        console.log("Match not found within 'handleAddNewBand!");
       }});
   }
 
@@ -107,7 +107,7 @@ function App() {
     setBandId(chosenBandId);
     setBandIndex(chosenBandIndex);
     // NOTE: Using console.log() here results in a weird 'before' state known issue since it needs to be re-rendered to screen
-    // so its better to use these console.log statements in 'handleEditFood' function instead:
+    // so its better to use these console.log statements in 'handleEditBand' function instead:
     // console.log("************************************************************");
   }
 
@@ -117,7 +117,7 @@ function App() {
     setConcertTickets(tempArray);
 
     // Set 'bandOptions' in state again to update it on the frontend:
-    let bandOptions = chosenConcertTicket.foods.map((band) => {
+    let bandOptions = chosenConcertTicket.bands.map((band) => {
       return (
           <option key={band.id} value={band.name}>{band.name}</option>
       )
@@ -170,13 +170,13 @@ function App() {
               onChooseConcertTicket={handleChooseConcertTicket} 
               chosenConcertTicket={chosenConcertTicket} 
               onFetchConcertTickets={handleFetchConcertTickets}
-              onAddFood={handleAddBand} 
-              foodOptions={bandOptions} 
+              onAddBand={handleAddBand} 
+              bandOptions={bandOptions} 
               setBandOptions={setBandOptions} 
               bandId={bandId} 
               setBandId={setBandId} 
               onChangeBandInfo={handleChangeBandInfo}
-              onEditFood={handleEditBand} 
+              onEditBand={handleEditBand} 
               onDeleteBand={handleDeleteBand} 
             />
           }
