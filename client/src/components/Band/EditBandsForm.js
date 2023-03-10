@@ -3,7 +3,9 @@ import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
 
 function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, conertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [editBandFormData, setEditBandFormData] = useState({
-        band_name: ""
+        // band_name: ""
+        name: ""
+
     });
 
     function handleChooseband(e) {
@@ -13,7 +15,9 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
         let bandMatch = mapMatch.props.value;
 
-        setEditBandFormData({"band_name": bandMatch});
+        // setEditBandFormData({"band_name": bandMatch});
+        setEditBandFormData({"name": bandMatch});
+
 
         let chosenConcertTicketBandsMatch = chosenConcertTicket.bands.find(band => band.name === bandMatch);
 
@@ -35,14 +39,14 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         const concertTicketId = chosenConcertTicket.id;
 
         // From 'rails routes' within 'rails c' console:
-        //  PATCH  /conertTickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
-        fetch(`/conertTickets/${concertTicketId}/bands/${bandId}`, {
+        //  PATCH  /conertt_tickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
+        fetch(`/conerttickets/${concertTicketId}/bands/${bandId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({"name": editBandFormData["band_name"], "concertticket_id": concertTicketId}),
+            body: JSON.stringify({"name": editBandFormData["name"], "concertticket_id": concertTicketId}),
         })
         .then((response) => response.json())
         .then((editedband) => onEditBand(editedband))
@@ -52,7 +56,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         e.preventDefault();
         const concertTicketId = chosenConcertTicket.id;
 
-        fetch(`/conertTickets/${concertTicketId}/bands/${bandId}`, {
+        fetch(`/concerttickets/${concertTicketId}/bands/${bandId}`, {
             method: "DELETE",
         })
         .then((response) => {

@@ -73,11 +73,11 @@ function App() {
   }
 
   function handleChooseConcertTicket(e) {
-    const match = concertTickets.find(item => item.name == e.target.value);
+    const match = concertTickets.find(item => item.title == e.target.value);
 
     setChosenConcertTicket(match);
 
-    let index = concertTickets.map(concertTicket => concertTicket.name).indexOf(e.target.value)
+    let index = concertTickets.map(concertTicket => concertTicket.title).indexOf(e.target.value)
 
     setConcertTicketIndex(index);
   }
@@ -193,37 +193,3 @@ function App() {
 export default App;
 
   
-//   return (
-//     <div className="App">
-//       <NavBar />
-//         <Routes>
-//           <Route path="/Signup" element={ <SignupForm/> } />
-//           <Route path="/" element={ <About/> } />
-//           <Route path="/Login" element={ <Login/> } />
-//         </Routes>
-//     </div>
-//   );
-// }
-  
-  
-//   return (
-//     <div className="App">
-//       <p>wtf</p>
- 
-//       <NavBar />
-//       <Routes >
-//       <Route path="/">
-//         <Home />
-//       </Route>
-//       <Route path="/signup">
-//         <SignupForm />
-//       </Route>
-//       <Route path="/login">
-//         <Login />
-//       </Route>
-//       <Routes >
-//     </div>
-//   );
-// }
-
-

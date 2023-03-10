@@ -6,7 +6,7 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
     // NOTE:
     // I placed the fetch for '/concertTickets' on the 'ConcertTicket' level as it was causing too many issues in the parent App component because of authentication:
     useEffect(() => {
-        fetch("/concertTickets", {
+        fetch("/concert_tickets", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -16,6 +16,8 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
         .then((response) => response.json())
         .then((data) => {
             onFetchConcertTickets(data);
+            // console.log(data);
+
         });
     }, []);
 

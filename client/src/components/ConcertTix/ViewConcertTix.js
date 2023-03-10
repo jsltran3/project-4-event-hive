@@ -5,7 +5,7 @@ function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
     // Make another fetch request just in case the the user decides to click on 'ViewConcertTickets' first before entering anything
     // to avoid a weird workflow issue
     useEffect(() => {
-        fetch("/concertTickets", {
+        fetch("/concert_tickets", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -48,16 +48,16 @@ function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
         return (
             <>
                 <ul>
-                    <li>{concertTicket.name}</li>
+                    <li>{concertTicket.title}</li>
                     <ul>
-                        <li>Start Time</li>
+                        {/* <li>Start Time</li>
                         <ul>
                             {concertTicket.start_time}
                         </ul>
                         <li>End Time: </li>
                         <ul>
                             {concertTicket.end_time}
-                        </ul>
+                        </ul> */}
                         <li>Bands: </li>
                         <ul>
                             {concertTicketBands}

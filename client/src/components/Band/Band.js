@@ -8,7 +8,7 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
     const [showEdit, setShowEdit] = useState(false);
 
     useEffect(() => {
-        fetch("/concerttickets", {
+        fetch("/concert_tickets", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

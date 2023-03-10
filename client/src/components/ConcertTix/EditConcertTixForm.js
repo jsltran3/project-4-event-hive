@@ -4,16 +4,14 @@ import ChooseConcertTicketDropdown from "./ChooseConcertTixDropDowm.js"
 function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditConcertTicket, onDeleteConcertTicket, chosenConcertTicket }) {
     useEffect(() => {
         setEditConcertTicketFormData({
-            name: chosenConcertTicket.name,
-            start_time: chosenConcertTicket.start_time,
-            end_time: chosenConcertTicket.end_time
+            title: chosenConcertTicket.title
+
         })
     }, [chosenConcertTicket]);
 
     const [editConcertTicketFormData, setEditConcertTicketFormData] = useState({
-        name: chosenConcertTicket.name,
-        start_time: chosenConcertTicket.start_time,
-        end_time: chosenConcertTicket.end_time
+        title: chosenConcertTicket.title
+        // name: chosenConcertTicket.name,
     });
 
     const handleEditConcertTicketChange = (e) => {
@@ -25,13 +23,16 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 
         const id = chosenConcertTicket.id;
 
-        fetch(`/concertTickets/${id}`, {
+        fetch(`/concerttickets/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: JSON.stringify({ "name": editConcertTicketFormData["name"], "start_time": editConcertTicketFormData["start_time"], "end_time": editConcertTicketFormData["end_time"] }),
+            // body: JSON.stringify({ "name": editConcertTicketFormData["name"], "start_time": editConcertTicketFormData["start_time"], "end_time": editConcertTicketFormData["end_time"] }),
+            // body: JSON.stringify({ "title": editConcertTicketFormData["title"] }),
+            body: JSON.stringify({ "title": editConcertTicketFormData.title }),
+
         })
         .then((response) => response.json())
         // NOTE: This is done to send up the edited concertTicket up to the parent component, 'App.js', accordingly:
@@ -45,7 +46,7 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
         console.log("handleDelete function called in EditConcertTicketForm child component");
         console.log("id: ", id);
 
-        fetch(`/concertTickets/${id}`, {
+        fetch(`/concerttickets/${id}`, {
             method: "DELETE",
         })
         .then((response) => {
@@ -63,15 +64,15 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             <ChooseConcertTicketDropdown concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} />
             <h2>Edit ConcertTicket</h2>
             <form>
-                <label htmlFor="name">Name of ConcertTicket:</label>
+                <label htmlFor="title">Title of ConcertTicket:</label>
                 <br />
                 <input onChange={handleEditConcertTicketChange} 
 									type="text" 
 									id="name" 
-									name="name" 
-									value={editConcertTicketFormData.name}/>
+									name="title" 
+									value={editConcertTicketFormData.title}/>
                 <br />
-                <label htmlFor="start_time">Start Time of ConcertTicket:</label>
+                {/* <label htmlFor="start_time">Start Time of ConcertTicket:</label>
                 <br />
                 <input 
 									onChange={handleEditConcertTicketChange}  
@@ -88,7 +89,7 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 									id="end_time" 
 									name="end_time" 
 									value={editConcertTicketFormData.end_time}/>
-                <br />
+                <br /> */}
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />
                 <br />

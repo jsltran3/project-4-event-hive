@@ -1,6 +1,11 @@
 class BandSerializer < ActiveModel::Serializer
   attributes :id, :name
+
+  belongs_to :user, serializer: UserSerializer
+  belongs_to :concert_ticket
 end
+
+ 
 
   # This will control the 'band' JSON response
   # TODO: You need to figure out what you need to pass the response

@@ -1,22 +1,50 @@
-class ConcertTicketsController < ApplicationController
-    def create 
+# require pry
 
+class ConcertTicketsController < ApplicationController
+    before_action :authorize, only: [:update]
+    
+
+    def create 
+        # byebug
         concert_ticket = ConcertTicket.create!(concert_ticket_params)
         render json: concert_ticket, status: :created
     end
 
     def update
         concert_ticket = ConcertTicket.find_by(id: params[:id])
-        user_id = @current_user.id
+        # concert_ticket = ConcertTicket.find_by(id: session[:id])
 
+        user_id = @current_user.id
+        # concert_ticket.users.ids
+
+        # byebug
+        # binding.pry
+
+        #maybe use authorize function and bcrip 
+        #isolate dropdown to just the user 
+        #user in an array so it can't equate user id to the user 
+        #either loop through array 
+        # if concert_ticket.users.ids == user_id
         if concert_ticket.users.find_by(id: user_id) 
+            
             concert_ticket.update(concert_ticket_params) 
             render json: concert_ticket
-
         else
             render json: { errors: [concert_ticket.errors.full_messages] }, status: :unprocessable_entity
         end
     end
+
+    # def update
+    #     user = User.find_by(id: session[:user_id])
+    #     user = 
+    #     concert_ticket = user.concert_ticket.find_by(id: params[:id])
+    #     if concert_ticket
+    #         concert_ticket.update(concert_ticket_params)
+    #       render json: concert_ticket
+    #     else 
+    #       render json: { error: "Review not found" }, status: :not_found
+    #     end
+    #   end
 
     # Add full CRUD capability for this model
     def index 
@@ -65,6 +93,6 @@ class ConcertTicketsController < ApplicationController
 
     def concert_ticket_params
         # byebug
-        params.permit(:name, :start_time, :end_time)
+        params.permit(:title)
     end
 end
