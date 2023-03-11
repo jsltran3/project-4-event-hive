@@ -15,8 +15,17 @@ class ConcertTicketsController < ApplicationController
         # concert_ticket = ConcertTicket.find_by(id: session[:id])
 
         user_id = @current_user.id
-        # concert_ticket.users.ids
-
+ 
+        if concert_ticket.users.find_by(id: user_id) 
+            
+            concert_ticket.update(concert_ticket_params) 
+            render json: concert_ticket
+        else
+            render json: { errors: concert_ticket.errors.full_messages }, status: :unprocessable_entity
+        end
+    end
+       # concert_ticket.users.ids
+#remove the message from the array 
         # byebug
         # binding.pry
 
@@ -25,15 +34,6 @@ class ConcertTicketsController < ApplicationController
         #user in an array so it can't equate user id to the user 
         #either loop through array 
         # if concert_ticket.users.ids == user_id
-        if concert_ticket.users.find_by(id: user_id) 
-            
-            concert_ticket.update(concert_ticket_params) 
-            render json: concert_ticket
-        else
-            render json: { errors: [concert_ticket.errors.full_messages] }, status: :unprocessable_entity
-        end
-    end
-
     # def update
     #     user = User.find_by(id: session[:user_id])
     #     user = 

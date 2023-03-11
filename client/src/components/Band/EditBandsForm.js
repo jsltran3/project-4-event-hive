@@ -40,7 +40,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
         // From 'rails routes' within 'rails c' console:
         //  PATCH  /conertt_tickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
-        fetch(`/conerttickets/${concertTicketId}/bands/${bandId}`, {
+        fetch(`/conert_tickets/${concertTicketId}/bands/${bandId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         e.preventDefault();
         const concertTicketId = chosenConcertTicket.id;
 
-        fetch(`/concerttickets/${concertTicketId}/bands/${bandId}`, {
+        fetch(`/concert_tickets/${concertTicketId}/bands/${bandId}`, {
             method: "DELETE",
         })
         .then((response) => {
