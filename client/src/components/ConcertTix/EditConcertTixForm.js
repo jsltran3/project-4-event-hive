@@ -11,8 +11,9 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 
     const [editConcertTicketFormData, setEditConcertTicketFormData] = useState({
         title: chosenConcertTicket.title
-        // name: chosenConcertTicket.name,
     });
+
+    console.log("Displaying concertTickets on EditConcertTicketsForm" concertTickets)
 
     const handleEditConcertTicketChange = (e) => {
         setEditConcertTicketFormData({...editConcertTicketFormData, [e.target.name]: e.target.value})
@@ -53,17 +54,24 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             console.log("response from deletion action: ", response);
             console.log("response.ok: ", response.ok);
             if (response.ok) {
-                onDeleteConcertTicket(chosenConcertTicket);
+                // onDeleteConcertTicket(chosenConcertTicket);
+                console.log(chosenConcertTicket);
+
             }
         })
     }
 
+
+
     return (
         <div>
-            <ChooseConcertTicketDropdowm concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} />
+            <ChooseConcertTicketDropdowm 
+                concertTickets={concertTickets} 
+                onChooseConcertTicket={onChooseConcertTicket} 
+            />
             <h2>Edit ConcertTicket</h2>
             <form>
-                <label htmlFor="title">Title of ConcertTicket:</label>
+                <label htmlFor="name">Title of ConcertTicket:</label>
                 <br />
                 <input onChange={handleEditConcertTicketChange} 
 									type="text" 
@@ -75,7 +83,7 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
                 <br />
                 <input onClick={handleEdit} type="submit" value="Submit Edit Changes" />
                 <br />
-                <input onClick={handleDelete} type="submit" value="Delete" />
+                <input onClick={handleDelete} type="submit" value="Delete Concert Ticket" />
             </form>
         </div>
     )

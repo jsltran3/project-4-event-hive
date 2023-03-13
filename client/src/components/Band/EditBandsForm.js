@@ -17,7 +17,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
         // setEditBandFormData({"band_name": bandMatch});
         setEditBandFormData({"name": bandMatch});
-
+        
 
         let chosenConcertTicketBandsMatch = chosenConcertTicket.bands.find(band => band.name === bandMatch);
 
@@ -46,7 +46,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify({"name": editBandFormData["name"], "concertticket_id": concertTicketId}),
+            body: JSON.stringify({"name": editBandFormData["name"], "concert_ticket_id": concertTicketId}),
         })
         .then((response) => response.json())
         .then((editedband) => onEditBand(editedband))
@@ -68,7 +68,10 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
     return (
         <div>
-            <ChooseConcertTixDropDowm conertTickets={conertTickets} onChooseConcertTicket={onChooseConcertTicket} />
+            <ChooseConcertTixDropDowm 
+                conertTickets={conertTickets} 
+                onChooseConcertTicket={onChooseConcertTicket} 
+            />
             <h2>Edit band</h2>
             <form>
                 <label htmlFor="band_select">Choose a Band:</label>
@@ -81,7 +84,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 <br />
                 <label htmlFor="name">Name of Band:</label>
                 <br />
-                <input onChange={handleEditbandChange} type="text" id="name" name="band_name" value={editBandFormData.band_name}/>
+                <input onChange={handleEditbandChange} type="text" id="name" name="name" value={editBandFormData.name}/>
                 <br />
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />

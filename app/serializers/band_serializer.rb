@@ -3,6 +3,8 @@ class BandSerializer < ActiveModel::Serializer
 
   # belongs_to :user, serializer: UserSerializer
   # belongs_to :concert_ticket
+  belongs_to :user
+  belongs_to :concert_ticket
 end
 
  

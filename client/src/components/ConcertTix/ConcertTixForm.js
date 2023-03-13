@@ -40,10 +40,10 @@ function ConcertTixForm({ onAddConcertTicket }) {
                 <label htmlFor="title">Title of ConcertTicket:</label>
                 <br />
                 <input 
-									onChange={handleCreateConcertTicketChange} 
-									type="text" 
-									id="title" 
-									name="title"/>
+                    onChange={handleCreateConcertTicketChange} 
+                    type="text" 
+                    id="name" 
+                    name="title"/>
                 <br />
 
                 <input type="submit"/>

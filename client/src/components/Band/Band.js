@@ -34,7 +34,7 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
             <button onClick={toggleAddBands}>Add Bands</button>
             <br />
             <br />
-            <button onClick={toggleEditBands}>Edit Bands</button>
+            <button onClick={toggleEditBands}>Edit Band Name</button>
             <br />
             {   
                 showAdd &&

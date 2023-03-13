@@ -12,7 +12,6 @@ class ConcertTicketsController < ApplicationController
 
     def update
         concert_ticket = ConcertTicket.find_by(id: params[:id])
-        # concert_ticket = ConcertTicket.find_by(id: session[:id])
 
         user_id = @current_user.id
  
@@ -77,16 +76,18 @@ class ConcertTicketsController < ApplicationController
     # However, I can still add an 'else' section to provide a 'status' 400 in this scenario
 
     def destroy 
+        user = User.find_by(id: session[:user_id])
         concert_ticket = ConcertTicket.find_by(id: params[:id])
-        user_id = @current_user.id
         
-        if concert_ticket.users.find_by(id: user_id) 
+        if concert_ticket.users.find_by(id: user) 
             concert_ticket.destroy
             head :no_content
         else
             render json: { error: "Bad request, cannot be deleted" }, status: 400
         end
     end
+
+
 
     # Custom
     private 

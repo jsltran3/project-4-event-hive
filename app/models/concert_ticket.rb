@@ -8,7 +8,7 @@ class ConcertTicket < ApplicationRecord
 
     has_many :bands, dependent: :destroy
     has_many :users, through: :bands 
-
+    
     validates :title, presence: true
 
 end

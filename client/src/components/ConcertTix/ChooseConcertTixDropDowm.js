@@ -3,7 +3,7 @@ import React from "react";
 function ChooseConcertTixDropDowm({ concertTickets, onChooseConcertTicket}) {
     console.log("Concert Tickets in ChooseConcertTicketForm: ", concertTickets);
 
-
+    //either change get request to pull tickets for certain users or loop through every concert ticket that'smade but better to do it in bakcend 
     let concertTicketOptionsArray = concertTickets.map(concertTicket => {
         return (
             <option key={concertTicket.id} value={concertTicket.title}>{concertTicket.title}</option>

@@ -35,10 +35,10 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
     return (
         <div>
             <h1>ConcertTickets</h1>
-            <button onClick={toggleAddConcertTickets}>Add ConcertTickets</button>
+            <button onClick={toggleAddConcertTickets}>Add Concert Ticket</button>
             <br />
             <br />
-            <button onClick={toggleEditConcertTickets}>Edit ConcertTickets</button>
+            <button onClick={toggleEditConcertTickets}>Edit or Delete Ticket</button>
             <br />
             { 
                 showAdd  &&
@@ -54,10 +54,10 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
                 showEdit &&
                 <EditConcertTixForm 
                     onEditConcertTicket={onEditConcertTicket} 
-										onDeleteConcertTicket={onDeleteConcertTicket} 
+                    onDeleteConcertTicket={onDeleteConcertTicket} 
                     concertTickets={concertTickets} 
-										onChooseConcertTicket={onChooseConcertTicket} 
-										chosenConcertTicket={chosenConcertTicket} 
+                    onChooseConcertTicket={onChooseConcertTicket} 
+                    chosenConcertTicket={chosenConcertTicket} 
                 />
             }
         </div>

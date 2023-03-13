@@ -67,7 +67,7 @@ function App() {
   function handleDeleteConcertTicket(deletedConcertTicket) {
     console.log("handleDeleteConcertTicket function called");
     console.log("deletedConcertTicket: ", deletedConcertTicket);
-    setChosenConcertTicket((concertTickets) =>
+    setConcertTickets((concertTickets) =>
       concertTickets.filter((concertTicket) => concertTicket.id !== deletedConcertTicket.id)
     );
   }
