@@ -13,7 +13,6 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
         title: chosenConcertTicket.title
     });
 
-    console.log("Displaying concertTickets on EditConcertTicketsForm" concertTickets)
 
     const handleEditConcertTicketChange = (e) => {
         setEditConcertTicketFormData({...editConcertTicketFormData, [e.target.name]: e.target.value})
@@ -54,13 +53,14 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             console.log("response from deletion action: ", response);
             console.log("response.ok: ", response.ok);
             if (response.ok) {
-                // onDeleteConcertTicket(chosenConcertTicket);
-                console.log(chosenConcertTicket);
+                onDeleteConcertTicket(chosenConcertTicket);
+                // console.log(chosenConcertTicket);
 
             }
         })
     }
 
+    console.log("Displaying concertTickets on EditConcertTicketsForm", concertTickets)
 
 
     return (

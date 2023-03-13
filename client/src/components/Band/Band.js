@@ -6,6 +6,7 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
 
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    console.log("Concert Tickets in Band Main component: ", concertTickets);
 
     useEffect(() => {
         fetch("/concert_tickets", {
@@ -40,7 +41,9 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
                 showAdd &&
                 <AddBandForm 
                     onAddBand={onAddBand} 
-                    concertTickets={concertTickets} onChooseConcertTicket={onChooseConcertTicket} chosenConcertTicket={chosenConcertTicket}
+                    concertTickets={concertTickets} 
+                    onChooseConcertTicket={onChooseConcertTicket} 
+                    chosenConcertTicket={chosenConcertTicket}
                 />
             }
             {   
@@ -48,17 +51,17 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
                 <hr/>
             }
             {
-                showEdit&&
+                showEdit &&
                 <EditBandForm 
                     bandOptions={bandOptions} 
-										setBandOptions={setBandOptions} 
-										bandId={bandId} setBandId={setBandId} 
-										onChangeBandInfo={onChangeBandInfo}
+                    setBandOptions={setBandOptions} 
+                    bandId={bandId} setBandId={setBandId} 
+                    onChangeBandInfo={onChangeBandInfo}
                     onEditBand={onEditBand} 
-										onDeleteBand={onDeleteBand} 
+                    onDeleteBand={onDeleteBand} 
                     concertTickets={concertTickets} 
-										onChooseConcertTicket={onChooseConcertTicket} 
-										chosenConcertTicket={chosenConcertTicket}
+                    onChooseConcertTicket={onChooseConcertTicket} 
+                    chosenConcertTicket={chosenConcertTicket}
                 />
             }
         </div>
