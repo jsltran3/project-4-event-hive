@@ -17,6 +17,7 @@ function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
             onFetchConcertTickets(data);
         });
     }, []);
+    
     console.log("concertTickets from ViewConcertTickets child component: ", concertTickets);
     let concertTicketResults = concertTickets.map((concertTicket) => {
         let concertTicketBands = concertTicket.bands.map((band) => {

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Route, Routes  } from "react-router-dom";
+// import { UserContext } from "./contexts/userContext";
 import Login from './Login';
 import About from './About.js';
 import NavBar from './NavBar.js';
@@ -18,6 +19,8 @@ function App() {
   const [bandOptions, setBandOptions] = useState([]);
   const [bandId, setBandId] = useState("");
   const [bandIndex, setBandIndex] = useState("");
+  // const {setUserInfo} = useContext(UserContext)
+
 
   useEffect(() => {
     // auto-login
@@ -25,7 +28,10 @@ function App() {
       if (r.ok) {
         r.json()
         .then((user) => {
+          // console.log("this is the user:", user)
+          // setUser(user); setUserInfo(user);
           setUser(user);
+
         })
     }
   });

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Error, Input, FormField, Label } from "./styles";
-// blah blah 
+import { UserContext } from "./contexts/userContext";
+
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -8,6 +9,8 @@ function SignUpForm({ onLogin }) {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const {setUserInfo} = useContext(UserContext)
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,7 +29,8 @@ function SignUpForm({ onLogin }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
+        r.json().then((user) => { onLogin(user); setUserInfo(user)}); 
+        
       } else {
         r.json().then((err) => setErrors(err.errors));
         // r.json().then((err) => console.log(err.errors));
@@ -34,7 +38,10 @@ function SignUpForm({ onLogin }) {
       }
     });
   }
-
+  // .then((user) => {
+  //   // console.log("this is the user:", user)
+  //   setUser(user); setUserInfo(user);
+  // })
   return (
     <form onSubmit={handleSubmit}>
       <FormField>

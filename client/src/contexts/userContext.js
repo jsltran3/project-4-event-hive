@@ -10,15 +10,16 @@ const [userInfo, setUserInfo] = useState({
     concert_tickets: []
 })
 
+
 useEffect(() => {
     console.log(userInfo)
 }, [userInfo])
 
     return (
-    <UserContext.Provider
-    value={{
-        userInfo, setUserInfo
-    }}>
+        <UserContext.Provider
+        value={{
+            userInfo, setUserInfo
+        }}>
         {children}
         </UserContext.Provider>
 )
