@@ -1,13 +1,13 @@
 import React, { useState } from "react"; 
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
 
-function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, conertTickets, onChooseConcertTicket, chosenConcertTicket }) {
+function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [editBandFormData, setEditBandFormData] = useState({
         // band_name: ""
         name: ""
 
     });
-
+    //use state has getter/setter, since it's a hook it can be called later for editbandformdata
     function handleChooseband(e) {
         let mapMatch = bandOptions.find(item => {
             return item.props.value === e.target.value
@@ -39,8 +39,8 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         const concertTicketId = chosenConcertTicket.id;
 
         // From 'rails routes' within 'rails c' console:
-        //  PATCH  /conertt_tickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
-        fetch(`/conert_tickets/${concertTicketId}/bands/${bandId}`, {
+        //  PATCH  /concert_tickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
+        fetch(`/concert_tickets/${concertTicketId}/bands/${bandId}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
     return (
         <div>
             <ChooseConcertTixDropDowm 
-                conertTickets={conertTickets} 
+                concertTickets={concertTickets} 
                 onChooseConcertTicket={onChooseConcertTicket} 
             />
             <h2>Edit band</h2>

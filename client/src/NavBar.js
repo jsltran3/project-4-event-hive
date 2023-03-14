@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { UserContext } from "./contexts/userContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "./styles"
 
 
 function NavBar({ user, setUser }) {
+  const {userInfo} = useContext(UserContext)
+
+  useEffect(() => {
+    if (userInfo.username) console.table(userInfo)
+  }, [userInfo])
+  
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -52,8 +59,14 @@ function NavBar({ user, setUser }) {
           <Button variant="outline" onClick={handleLogoutClick}>
             Logout
           </Button>
+          <div>
+            {userInfo.username}
+          </div>
+
+          
         </Nav>
       </Wrapper>
+
     </>
   );
 }
@@ -93,6 +106,8 @@ const Nav = styled.nav`
   position: absolute;
   left: 20px;
 `;
+
+
 
 export default NavBar;
 
