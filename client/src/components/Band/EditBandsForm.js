@@ -6,7 +6,6 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         name: ""
 
     });
-    //use state has getter/setter, since it's a hook it can be called later for editbandformdata
     function handleChooseband(e) {
         let mapMatch = bandOptions.find(item => {
             return item.props.value === e.target.value
@@ -14,14 +13,12 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
         let bandMatch = mapMatch.props.value;
 
-        // setEditBandFormData({"band_name": bandMatch});
         setEditBandFormData({"name": bandMatch});
         
 
         let chosenConcertTicketBandsMatch = chosenConcertTicket.bands.find(band => band.name === bandMatch);
 
-        // From this StackOverflow example:
-        // https://stackoverflow.com/questions/8668174/indexof-method-in-an-object-array
+   
         let chosenBandIndex = chosenConcertTicket.bands.map(band => band.name).indexOf(bandMatch);
 
         let chosenBandId = chosenConcertTicketBandsMatch.id;
@@ -37,8 +34,6 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
 
         const concertTicketId = chosenConcertTicket.id;
 
-        // From 'rails routes' within 'rails c' console:
-        //  PATCH  /concert_tickets/:concertticket_id/bands/:id(.:format)                                                         bands#update  
         fetch(`/concert_tickets/${concertTicketId}/bands/${bandId}`, {
             method: "PATCH",
             headers: {
