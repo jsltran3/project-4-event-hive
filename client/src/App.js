@@ -29,7 +29,6 @@ function App() {
       if (r.ok) {
         r.json()
         .then((user) => {
-          // console.log("this is the user:", user)
           setUser(user); setUserInfo(user);
           setUser(user);
 
@@ -113,9 +112,7 @@ function App() {
   function handleChangeBandInfo(chosenBandId, chosenBandIndex) {
     setBandId(chosenBandId);
     setBandIndex(chosenBandIndex);
-    // NOTE: Using console.log() here results in a weird 'before' state known issue since it needs to be re-rendered to screen
-    // so its better to use these console.log statements in 'handleEditBand' function instead:
-    // console.log("************************************************************");
+
   }
 
   function handleEditBand(editedBand) {
@@ -123,7 +120,6 @@ function App() {
     tempArray[concertTicketIndex].bands[bandIndex] = editedBand;
     setConcertTickets(tempArray);
 
-    // Set 'bandOptions' in state again to update it on the frontend:
     let bandOptions = chosenConcertTicket.bands.map((band) => {
       return (
           <option key={band.id} value={band.name}>{band.name}</option>
@@ -149,9 +145,9 @@ function App() {
 
   return (
     <>
-              <Logo>
+      <Logo>
           <h1>Event Hive</h1>
-        </Logo>
+      </Logo>
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route 

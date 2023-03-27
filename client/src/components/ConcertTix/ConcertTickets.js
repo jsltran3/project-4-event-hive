@@ -3,9 +3,7 @@ import ConcertTixForm from "./ConcertTixForm";
 import EditConcertTixForm from "./EditConcertTixForm.js"
 
 function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTicket, onEditConcertTicket, onDeleteConcertTicket, onChooseConcertTicket, chosenConcertTicket}) {
-    // NOTE:
-    // I placed the fetch for '/concertTickets' on the 'ConcertTicket' level as it was causing too many issues in the parent App component because of authentication:
-    useEffect(() => {
+\\    useEffect(() => {
         fetch("/concert_tickets", {
         method: "GET",
         headers: {

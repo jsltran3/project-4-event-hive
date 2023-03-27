@@ -1,9 +1,7 @@
 import React, { useEffect } from "react"
 
 function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
-    // NOTE:
-    // Make another fetch request just in case the the user decides to click on 'ViewConcertTickets' first before entering anything
-    // to avoid a weird workflow issue
+
     useEffect(() => {
         fetch("/concert_tickets", {
         method: "GET",
@@ -32,14 +30,8 @@ function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
             usersArray.push(user);
         })
 
-        // Remove duplicate users since each 'band' is tied to a user:
-        // Used this StackOverflow post as a reference:
-        // https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
         let uniqueUsers = [...new Set(usersArray.map((user) => user.username ))]  ;
-        // console.log("uniqueUsers: ", uniqueUsers);
 
-        // Regardless of this post, it's still worth it to use .indexOf() in this scenario:
-        // https://stackoverflow.com/questions/59517962/react-using-index-as-key-for-items-in-the-list
         let concertTicketUsers = uniqueUsers.map((user) => {
             return (
                 <li key={uniqueUsers.indexOf(user)}>{user}</li>
@@ -51,14 +43,6 @@ function ViewConcertTix({ concertTickets, onFetchConcertTickets }) {
                 <ul>
                     <li>{concertTicket.title}</li>
                     <ul>
-                        {/* <li>Start Time</li>
-                        <ul>
-                            {concertTicket.start_time}
-                        </ul>
-                        <li>End Time: </li>
-                        <ul>
-                            {concertTicket.end_time}
-                        </ul> */}
                         <li>Bands: </li>
                         <ul>
                             {concertTicketBands}

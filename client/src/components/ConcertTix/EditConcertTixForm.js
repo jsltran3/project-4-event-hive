@@ -34,7 +34,6 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 
         })
         .then((response) => response.json())
-        // NOTE: This is done to send up the edited concertTicket up to the parent component, 'App.js', accordingly:
         .then((editedConcertTicket) => onEditConcertTicket(editedConcertTicket));
     }
 
@@ -49,7 +48,6 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             method: "DELETE",
         })
         .then((response) => {
-            // NOTE: This checks the response, and then sends back the chosenConcertTicket up to the parent to be deleted by the handler function:
             console.log("response from deletion action: ", response);
             console.log("response.ok: ", response.ok);
             if (response.ok) {

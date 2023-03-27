@@ -22,14 +22,10 @@ function ConcertTixForm({ onAddConcertTicket }) {
                 "Accept": "application/json",
             },
             body: JSON.stringify({ "title": createConcertTicketFormData.title }),
-            // body: JSON.stringify( title : createConcertTicketFormData.title ),
-
-            // body: JSON.stringify({ "title": createConcertTicketFormData["title"], "start_time": createConcertTicketFormData["start_time"], "end_time": createConcertTicketFormData["end_time"] }),
+  
         })
         .then((response) => response.json())
-        // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
         .then((newConcertTicket) => onAddConcertTicket(newConcertTicket));
-            // .then((newConcertTicket) => console.log(newConcertTicket));
 
     }
 
