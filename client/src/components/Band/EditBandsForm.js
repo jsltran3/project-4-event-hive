@@ -1,5 +1,7 @@
 import React, { useState } from "react"; 
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
+import swal from "sweetalert";
+
 
 function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [editBandFormData, setEditBandFormData] = useState({
@@ -43,7 +45,16 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
             body: JSON.stringify({"name": editBandFormData["name"], "concert_ticket_id": concertTicketId}),
         })
         .then((response) => response.json())
-        .then((editedband) => onEditBand(editedband))
+        // .then((editedband) => onEditBand(editedband))
+        .then((editedband) => {
+            if (!editedband) {
+                onEditBand(editedband)
+                swal("Band Edited!")
+            }
+            else {
+                swal("Can Only Edit Your Own Band")
+            }
+            });
     }
 
     const handleDelete = (e) => {
@@ -58,6 +69,15 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 onDeleteBand(response, bandId);
             }
         })
+        .then((response) => {
+            if (response.ok) {
+                onDeleteBand(response, bandId);
+                swal("Band Deleted!");
+            }
+            else {
+                swal("Can Only Delete Your Own Band")
+            }
+        });
     }
 
     return (

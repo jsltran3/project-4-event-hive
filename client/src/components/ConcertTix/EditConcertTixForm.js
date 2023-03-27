@@ -72,7 +72,7 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 						else {
 							swal("Can only delete your own ticket")
 						}
-        })
+        });
     }
 
     console.log("Displaying concertTickets on EditConcertTicketsForm", concertTickets)
