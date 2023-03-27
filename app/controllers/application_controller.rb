@@ -8,9 +8,7 @@ class ApplicationController < ActionController::API
   private
 
   def authorize
-    # NOTE: This is exactly how the /concert_tickets route knows what user has logged in since when the user logs in, 
-    # This information is passed in via the params
-    #finding the user and storing it as a cooking in sesh hash
+
     @current_user = User.find_by(id: session[:user_id])
   
     render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_user

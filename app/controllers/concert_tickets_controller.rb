@@ -23,29 +23,7 @@ class ConcertTicketsController < ApplicationController
             render json: { errors: concert_ticket.errors.full_messages }, status: :unprocessable_entity
         end
     end
-       # concert_ticket.users.ids
-#remove the message from the array 
-        # byebug
-        # binding.pry
 
-        #maybe use authorize function and bcrip 
-        #isolate dropdown to just the user 
-        #user in an array so it can't equate user id to the user 
-        #either loop through array 
-        # if concert_ticket.users.ids == user_id
-    # def update
-    #     user = User.find_by(id: session[:user_id])
-    #     user = 
-    #     concert_ticket = user.concert_ticket.find_by(id: params[:id])
-    #     if concert_ticket
-    #         concert_ticket.update(concert_ticket_params)
-    #       render json: concert_ticket
-    #     else 
-    #       render json: { error: "Review not found" }, status: :not_found
-    #     end
-    #   end
-
-    # Add full CRUD capability for this model
     def index 
         # byebug
         concert_tickets = ConcertTicket.all

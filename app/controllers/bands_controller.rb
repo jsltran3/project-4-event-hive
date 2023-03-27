@@ -49,10 +49,7 @@ class BandsController < ApplicationController
     private 
 
     def band_params
-        # NOTE: I added ':concert_ticket_id' to try to prevent weird creation validation issues:
-        # params.permit(:name, :concert_ticket_id)
-        # The resulting error from this will show that the nested 'band' key is an issue, but its not really a problem so it can be ignored:
-        # "band"=>{"concert_ticket_id"=>2, "name"=>"Beatles"}
+
         params.permit(:name, :concert_ticket_id)
     end
 
