@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { UserContext } from "./contexts/userContext";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Button } from "./styles"
+import { Button, Box } from "./styles";
 
 
 function NavBar({ user, setUser }) {
@@ -20,33 +20,15 @@ function NavBar({ user, setUser }) {
     });
   }
 
-  // Get the current date timestamp to determine the current hour for 'dark mode' settings:
-  // const currentDate = new Date();
-  // const currentHour = `${currentDate.getHours()}`;
-  // setHour(currentHour);
-  // console.log("currentHour in 24 hour clock: ", currentHour);
-
-  // if (currentHour > 17) {
-  //   context.updateContext({color1: "black"});
-  // }
-
-  // Used these pages as references for the '/concerttickets' route:
-  // https://stackoverflow.com/questions/38839510/forcing-a-react-router-link-to-load-a-page-even-if-were-already-on-that-page
-  // https://stackoverflow.com/questions/38809989/react-router-link-not-causing-component-to-update-within-nested-routes
-
-
-          // <Button as={Link} onClick={() => this.forceUpdate} to="/concerttickets"></Button>
 
   return (
     <>
       <Wrapper>
-        <Logo>
-          <h1>Event Hive</h1>
-        </Logo>
         <Nav>
           <Button as={Link} to="/about">
             About
           </Button> 
+          
           <Button as={Link} to="/concerttickets">
             Concert Tickets
           </Button>
@@ -59,9 +41,12 @@ function NavBar({ user, setUser }) {
           <Button variant="outline" onClick={handleLogoutClick}>
             Logout
           </Button>
-          <div>
+          {/* <div>
             {userInfo.username}
-          </div>
+          </div> */}
+          <Box>
+            {userInfo.username}
+          </Box>
 
           
         </Nav>
@@ -80,6 +65,7 @@ function NavBar({ user, setUser }) {
 //   );
 // }
 
+//Main Logo
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -88,11 +74,17 @@ const Wrapper = styled.div`
 `;
 
 const Logo = styled.h1`
-  font-family: "Permanent Marker", cursive;
+  font-family: "Permanent Marker", regular;
   font-size: 2rem;
-  color: red;
-  margin: 0;
+  color: Yellow;
+  margin: 100;
   line-height: 1;
+  -webkit-text-stroke: 2px black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+
+
 
   a {
     color: inherit;
@@ -111,17 +103,3 @@ const Nav = styled.nav`
 
 export default NavBar;
 
-// function ThemeDiv({ currentHour }) {
-//     // const theme = useContext(ThemeContext)
-
-// const themedDiv = 
-//       styled.div`
-//           background-color: ${theme.light.background}
-//     `;
-
-//     const themedDiv = styled.div`
-//       background-color: black;
-//     `
-
-//     return themedDiv;
-// }

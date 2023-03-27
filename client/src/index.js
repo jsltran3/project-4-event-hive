@@ -25,8 +25,7 @@ ReactDOM.render(
   <UserProvider>
   <BrowserRouter>
     <GlobalStyle />
-    <App
-     />
+    <App/>
   </BrowserRouter>
   </UserProvider>,
   document.getElementById("root")

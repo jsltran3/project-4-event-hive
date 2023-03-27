@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Route, Routes  } from "react-router-dom";
-// import { UserContext } from "./contexts/userContext";
+import { UserContext } from "./contexts/userContext";
 import Login from './Login';
 import About from './About.js';
 import NavBar from './NavBar.js';
 import ConcertTicket from "./components/ConcertTix/ConcertTickets";
 import Band from "./components/Band/Band";
 import ViewConcertTix from "./components/ConcertTix/ViewConcertTix";
+import styled from "styled-components";
 
 
 
@@ -19,7 +20,7 @@ function App() {
   const [bandOptions, setBandOptions] = useState([]);
   const [bandId, setBandId] = useState("");
   const [bandIndex, setBandIndex] = useState("");
-  // const {setUserInfo} = useContext(UserContext)
+  const {setUserInfo} = useContext(UserContext)
 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
         r.json()
         .then((user) => {
           // console.log("this is the user:", user)
-          // setUser(user); setUserInfo(user);
+          setUser(user); setUserInfo(user);
           setUser(user);
 
         })
@@ -148,6 +149,9 @@ function App() {
 
   return (
     <>
+              <Logo>
+          <h1>Event Hive</h1>
+        </Logo>
       <NavBar user={user} setUser={setUser} />
       <Routes>
         <Route 
@@ -196,6 +200,22 @@ function App() {
   );
 }
 
+const Logo = styled.h1`
+font-family: "Permanent Marker", regular;
+font-size: 2rem;
+color: Yellow;
+margin: -1;
+line-height: 1;
+-webkit-text-stroke: 2px black;
+
+
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+`;
+
 export default App;
 
-  

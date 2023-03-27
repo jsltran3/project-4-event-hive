@@ -3,7 +3,6 @@ import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
 
 function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [editBandFormData, setEditBandFormData] = useState({
-        // band_name: ""
         name: ""
 
     });

@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const COLORS = {
   primary: {
-    "--main": "green",
-    "--accent": "white",
+    "--main": "Black",
+    "--accent": "Yellow",
   },
   secondary: {
     "--main": "lavenderblush",

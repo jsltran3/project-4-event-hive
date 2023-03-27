@@ -39,10 +39,12 @@ function Login({ onLogin }) {
 }
 
 const Logo = styled.h1`
-  font-family: "Permanent Marker", cursive;
-  font-size: 3rem;
-  color: red;
+  font-family: "Permanent Marker", bold;
+  font-size: 5rem;
+  color: yellow;
   margin: 8px 0 16px;
+  -webkit-text-stroke: 2px black;
+
 `;
 
 const Wrapper = styled.section`
