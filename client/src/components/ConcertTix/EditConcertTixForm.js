@@ -64,14 +64,13 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
         })
         .then((response) => {
             console.log("response from deletion action: ", response);
-            console.log("response.ok: ", response.ok);
-            if (response.ok) {
+            if (response) {
                 onDeleteConcertTicket(chosenConcertTicket);
                 swal("Concert Ticket Deleted!");
             }
-						else {
-							swal("Can only delete your own ticket")
-						}
+            else {
+                swal("Can only delete your own ticket")
+            }
         });
     }
 

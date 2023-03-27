@@ -70,7 +70,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
             }
         })
         .then((response) => {
-            if (response.ok) {
+            if (response) {
                 onDeleteBand(response, bandId);
                 swal("Band Deleted!");
             }
