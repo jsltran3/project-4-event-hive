@@ -3,7 +3,9 @@ import ConcertTixForm from "./ConcertTixForm";
 import EditConcertTixForm from "./EditConcertTixForm.js"
 
 function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTicket, onEditConcertTicket, onDeleteConcertTicket, onChooseConcertTicket, chosenConcertTicket}) {
-\\    useEffect(() => {
+    // NOTE:
+    // I placed the fetch for '/concertTickets' on the 'ConcertTicket' level as it was causing too many issues in the parent App component because of authentication:
+    useEffect(() => {
         fetch("/concert_tickets", {
         method: "GET",
         headers: {
@@ -14,8 +16,6 @@ function ConcertTickets({ concertTickets, onFetchConcertTickets, onAddConcertTic
         .then((response) => response.json())
         .then((data) => {
             onFetchConcertTickets(data);
-            // console.log(data);
-
         });
     }, []);
 

@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ChooseConcertTicketDropdowm from "./ChooseConcertTixDropDowm.js"
+import swal from "sweetalert";
+
+
+
+
 
 function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditConcertTicket, onDeleteConcertTicket, chosenConcertTicket }) {
+
+
     useEffect(() => {
         setEditConcertTicketFormData({
             title: chosenConcertTicket.title
@@ -34,7 +41,15 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 
         })
         .then((response) => response.json())
-        .then((editedConcertTicket) => onEditConcertTicket(editedConcertTicket));
+        .then((editedConcertTicket) => {
+					if (!editedConcertTicket.errors) {
+						onEditConcertTicket(editedConcertTicket)
+						swal("Concert Ticket Edited!")
+					}
+					else {
+						swal("Can only edit your own ticket")
+					}
+					});
     }
 
     const handleDelete = (e) => {
@@ -52,9 +67,11 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             console.log("response.ok: ", response.ok);
             if (response.ok) {
                 onDeleteConcertTicket(chosenConcertTicket);
-                // console.log(chosenConcertTicket);
-
+                swal("Concert Ticket Deleted!");
             }
+						else {
+							swal("Can only delete your own ticket")
+						}
         })
     }
 
