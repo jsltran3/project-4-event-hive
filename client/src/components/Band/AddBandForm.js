@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
 import swal from "sweetalert";
 import styled from "styled-components";
-
+// import { Error } from "./style"
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [errors, setErrors] = useState([]);
@@ -37,7 +37,6 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 						if (r.ok) {
 							r.json().then((r) => {
 								onAddBand(r)
-                                // console.log(r)
 							});
 						} else {
 							r.json().then((err) => setErrors(err.errors))
@@ -62,9 +61,16 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
                 <br />
                 <input onClick={handleCreate} type="submit"/>
 								<form>
-        {errors.map((err) => (
+        {/* {errors.map((err) => (
           <Error key={err}>{err}</Error>
-        ))}
+        ))} */}
+				{errors.length > 0 && (
+        <ul className="errors" style={{ color: "red" }}>
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
       </form>
             </form>
         </div>
@@ -72,14 +78,14 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 
 }
 
-function Error({ children }) {
-  return (
-    <Wrapper>
-      <Alert>!</Alert>
-      <Message>{children}</Message>
-    </Wrapper>
-  );
-}
+// function Error({ children }) {
+//   return (
+//     <Wrapper>
+//       <Alert>!</Alert>
+//       <Message>{children}</Message>
+//     </Wrapper>
+//   );
+// }
 
 const Wrapper = styled.div`
   color: red;
