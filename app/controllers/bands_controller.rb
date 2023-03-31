@@ -1,20 +1,32 @@
 class BandsController < ApplicationController
+
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+
     def create 
  
         band = @current_user.bands.create(band_params)
-      
+        
+        if band.valid?
         render json: band, status: :created
+        else 
+            render json: { errors: ["Form can't be empty"] }, status: :unauthorized
+        end
+
+        # render json: band, status: :created
+
+
     end
 
     def update
 
         band = @current_user.bands.find_by(id: params[:id])
-        if band.user_id == @current_user.id
-            band.update(band_params)
-            render json: band
-        else
+
+        # if band.user_id == @current_user.id
+        #     band.update(band_params)
+        #     render json: band
+        # else
             render json: { errors: [band.errors.full_messages] }, status: :unprocessable_entity
-        end
+        # end
     end
 
     def index 
@@ -47,6 +59,12 @@ class BandsController < ApplicationController
     # Custom
 
     private 
+
+    def render_unprocessable_entity(invalid)
+
+        render json:{error: invalid.record.errors}, status: :unprocessable_entity
+
+    end
 
     def band_params
 

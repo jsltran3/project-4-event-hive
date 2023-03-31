@@ -56,16 +56,8 @@ function NavBar({ user, setUser }) {
   );
 }
 
-// This is what will utilize the 'useContext' hook to change the theme of the app dependent upon the time of day:
-// function ThemeDiv() {
-//   return (
-//       <div>
-//         styled.div`background-color: ${currentTheme.background};`
-//       </div>
-//   );
-// }
 
-//Main Logo
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;

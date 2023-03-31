@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AddBandForm from "./AddBandForm.js";
 import EditBandForm from "./EditBandsForm.js";
 
+
 function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket, onFetchConcertTickets }) {
 
     const [showAdd, setShowAdd] = useState(false);

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
+import swal from "sweetalert";
+import styled from "styled-components";
+import style from '/client/src/styles'
+
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
+    const [errors, setErrors] = useState([]);
     const [createBandFormData, setCreateBandFormData] = useState({
         name: "",
     });
@@ -12,6 +17,9 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 
     const handleCreate = (e) => {
         e.preventDefault();
+
+        // setErrors([]);
+
         const id = chosenConcertTicket.id;
         // NOTE: The 'Application Controller' will handle the '@current_user' so that it already knows the session["user_id"] to use in this scenario
         // Therefore, all you need to do is pass in a fetch request to the '/concertTickets' route:
@@ -21,11 +29,27 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
-            body: JSON.stringify({ "name": createBandFormData["band_name"], "concertTicket_id": id}),
+            body: JSON.stringify({ 
+							"name": createBandFormData["band_name"], 
+							"concertTicket_id": id
+						}),
         })
-        .then((response) => response.json())
-        // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
-        .then((newBand) => onAddBand(newBand));
+					.then((r) =>{
+						if (r.ok) {
+							r.json().then((r) => {
+								onAddBand(r)
+                                // console.log(r)
+							});
+						} else {
+							r.json().then((err) => setErrors(err.errors))
+
+						}
+					});
+        // .then((response) => response.json())
+        // // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
+        // .then((newBand) => onAddBand(newBand));
+		
+
     }
 
     return (
@@ -38,10 +62,55 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
                 <input onChange={handleCreateBandChange} type="text" id="name" name="band_name"/>
                 <br />
                 <input onClick={handleCreate} type="submit"/>
+								<form>
+        {errors.map((err) => (
+          <Error key={err}>{err}</Error>
+        ))}
+      </form>
             </form>
         </div>
     )
 
 }
+
+function Error({ children }) {
+  return (
+    <Wrapper>
+      <Alert>!</Alert>
+      <Message>{children}</Message>
+    </Wrapper>
+  );
+}
+
+const Wrapper = styled.div`
+  color: red;
+  background-color: mistyrose;
+  border-radius: 6px;
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+`;
+
+const Alert = styled.span`
+  background-color: white;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  font-weight: bold;
+  display: grid;
+  place-content: center;
+`;
+
+const Message = styled.p`
+  margin: 0;
+`;
+
+const FormField = styled.div`
+  &:not(:last-child) {
+    margin-bottom: 12px;
+  }
+`;
 
 export default AddBandForm;
