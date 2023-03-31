@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 function ConcertTixForm({ onAddConcertTicket }) {
-    const [createConcertTicketFormData, setCreateConcertTicketFormData] = useState({
-        title: ""
-        // start_time: "",
-        // end_time: ""
-    });
+	const [errors, setErrors] = useState([]);
+	const [createConcertTicketFormData, setCreateConcertTicketFormData] = useState({
+			title: ""
+	});
 
     const handleCreateConcertTicketChange = (e) => {
+        
         setCreateConcertTicketFormData({...createConcertTicketFormData, [e.target.name]: e.target.value})
     };
 
@@ -24,8 +24,18 @@ function ConcertTixForm({ onAddConcertTicket }) {
             body: JSON.stringify({ "title": createConcertTicketFormData.title }),
   
         })
-        .then((response) => response.json())
-        .then((newConcertTicket) => onAddConcertTicket(newConcertTicket));
+            .then((r) =>{
+        if (r.ok) {
+            r.json().then((r) => {
+                onAddConcertTicket(r)
+            });
+        } else {
+            r.json().then((err) => setErrors(err.errors))
+
+        }
+    });
+        // .then((response) => response.json())
+        // .then((newConcertTicket) => onAddConcertTicket(newConcertTicket));
 
     }
 
@@ -43,6 +53,13 @@ function ConcertTixForm({ onAddConcertTicket }) {
                 <br />
 
                 <input type="submit"/>
+								{errors.length > 0 && (
+        <ul className="errors">
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
             </form>
         </div>
     )

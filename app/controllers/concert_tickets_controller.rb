@@ -5,9 +5,17 @@ class ConcertTicketsController < ApplicationController
     
 
     def create 
-        # byebug
+
         concert_ticket = ConcertTicket.create!(concert_ticket_params)
-        render json: concert_ticket, status: :created
+
+        if concert_ticket.valid?
+            render json: concert_ticket, status: :created
+        else 
+            render json: { errors: ["Form can't be empty"] }, status: :unauthorized
+        end
+
+        # render json: concert_ticket, status: :created
+
     end
 
     def update

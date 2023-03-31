@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
 import swal from "sweetalert";
-import styled from "styled-components";
-// import { Error } from "./style"
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [errors, setErrors] = useState([]);
@@ -37,6 +35,7 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 						if (r.ok) {
 							r.json().then((r) => {
 								onAddBand(r)
+                                // console.log(r)
 							});
 						} else {
 							r.json().then((err) => setErrors(err.errors))
@@ -61,11 +60,8 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
                 <br />
                 <input onClick={handleCreate} type="submit"/>
 								<form>
-        {/* {errors.map((err) => (
-          <Error key={err}>{err}</Error>
-        ))} */}
-				{errors.length > 0 && (
-        <ul className="errors" style={{ color: "red" }}>
+                {errors.length > 0 && (
+        <ul className="errors">
           {errors.map((error) => (
             <li key={error}>{error}</li>
           ))}
@@ -78,44 +74,5 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 
 }
 
-// function Error({ children }) {
-//   return (
-//     <Wrapper>
-//       <Alert>!</Alert>
-//       <Message>{children}</Message>
-//     </Wrapper>
-//   );
-// }
-
-const Wrapper = styled.div`
-  color: red;
-  background-color: mistyrose;
-  border-radius: 6px;
-  display: flex;
-  padding: 8px;
-  align-items: center;
-  gap: 8px;
-  margin: 8px 0;
-`;
-
-const Alert = styled.span`
-  background-color: white;
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  font-weight: bold;
-  display: grid;
-  place-content: center;
-`;
-
-const Message = styled.p`
-  margin: 0;
-`;
-
-const FormField = styled.div`
-  &:not(:last-child) {
-    margin-bottom: 12px;
-  }
-`;
 
 export default AddBandForm;

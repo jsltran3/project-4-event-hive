@@ -7,7 +7,7 @@ class BandsController < ApplicationController
         band = @current_user.bands.create(band_params)
         
         if band.valid?
-        render json: band, status: :created
+            render json: band, status: :created
         else 
             render json: { errors: ["Form can't be empty"] }, status: :unauthorized
         end
@@ -21,12 +21,12 @@ class BandsController < ApplicationController
 
         band = @current_user.bands.find_by(id: params[:id])
 
-        # if band.user_id == @current_user.id
-        #     band.update(band_params)
-        #     render json: band
-        # else
+        if band.user_id == @current_user.id
+            band.update(band_params)
+            render json: band
+        else
             render json: { errors: [band.errors.full_messages] }, status: :unprocessable_entity
-        # end
+        end
     end
 
     def index 
