@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
 import swal from "sweetalert";
 import styled from "styled-components";
-import style from '/client/src/styles'
 
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
