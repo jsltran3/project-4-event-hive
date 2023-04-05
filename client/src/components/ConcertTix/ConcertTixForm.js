@@ -24,18 +24,17 @@ function ConcertTixForm({ onAddConcertTicket }) {
             body: JSON.stringify({ "title": createConcertTicketFormData.title }),
   
         })
-            .then((r) =>{
-        if (r.ok) {
-            r.json().then((r) => {
-                onAddConcertTicket(r)
-            });
-        } else {
-            r.json().then((err) => setErrors(err.errors))
-
-        }
-    });
-        // .then((response) => response.json())
-        // .then((newConcertTicket) => onAddConcertTicket(newConcertTicket));
+        .then((r) => {
+            if (r.ok) {
+                r.json().then((r) => {
+                    onAddConcertTicket(r)
+                });
+            } else {
+                r.json().then((err) => setErrors(err.errors))
+                
+            }
+            }
+        );
 
     }
 
@@ -53,13 +52,13 @@ function ConcertTixForm({ onAddConcertTicket }) {
                 <br />
 
                 <input type="submit"/>
-								{errors.length > 0 && (
-        <ul className="errors">
-          {errors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      )}
+                    {errors.length > 0 && (
+                        <ul className="errors">
+                        {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                         ))}
+                         </ul>
+                    )}
             </form>
         </div>
     )

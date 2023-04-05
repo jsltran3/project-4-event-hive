@@ -1,11 +1,12 @@
 # require pry
 
 class ConcertTicketsController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+
     before_action :authorize, only: [:update]
     
 
     def create 
-
         concert_ticket = ConcertTicket.create!(concert_ticket_params)
 
         if concert_ticket.valid?
@@ -19,17 +20,23 @@ class ConcertTicketsController < ApplicationController
     end
 
     def update
+        user_id = User.find_by(id: session[:user_id])
         concert_ticket = ConcertTicket.find_by(id: params[:id])
+        # concert_ticket = user_id.ConcertTicket.find_by(id: params[:id])
 
-        user_id = @current_user.id
- 
-        if concert_ticket.users.find_by(id: user_id) 
-            
+        # user_id = @current_user.id
+
+        # if concert_ticket.users.find_by(id: user_id) 
+        if concert_ticket
+
             concert_ticket.update(concert_ticket_params) 
             render json: concert_ticket
         else
-            render json: { errors: concert_ticket.errors.full_messages }, status: :unprocessable_entity
+            # render json: { errors: concert_ticket.errors.full_messages }, status: :unprocessable_entity
+            render json: { errors: "Form can't be empty" }, status: :unauthorized
         end
+
+
     end
 
     def index 
@@ -81,5 +88,9 @@ class ConcertTicketsController < ApplicationController
     def concert_ticket_params
         # byebug
         params.permit(:title)
+    end
+
+    def render_unprocessable_entity(invalid)
+        render json:{error: invalid.record.errors}, status: :unprocessable_entity
     end
 end

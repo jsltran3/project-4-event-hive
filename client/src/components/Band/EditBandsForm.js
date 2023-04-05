@@ -3,7 +3,10 @@ import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm";
 import swal from "sweetalert";
 
 
+
 function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
+    const [errors, setErrors] = useState([]);
+
     const [editBandFormData, setEditBandFormData] = useState({
         name: ""
 
@@ -44,17 +47,28 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
             },
             body: JSON.stringify({"name": editBandFormData["name"], "concert_ticket_id": concertTicketId}),
         })
-        .then((response) => response.json())
-        // .then((editedband) => onEditBand(editedband))
-        .then((editedband) => {
-            if (!editedband) {
-                onEditBand(editedband)
-                swal("Band Edited!")
+        // .then((response) => response.json())
+        // // .then((editedband) => onEditBand(editedband))
+        // .then((editedband) => {
+        //     if (!editedband) {
+        //         onEditBand(editedband)
+        //         swal("Band Edited!")
+        //     }
+        //     else {
+        //         swal("Can Only Edit Your Own Band")
+        //     }
+        //     });
+        .then((r) =>{
+            if (r.ok) {
+                r.json().then((r) => {
+                    onEditBand(r)
+                    // console.log(r)
+                });
+            } else {
+                r.json().then((err) => setErrors(err.errors))
+
             }
-            else {
-                swal("Can Only Edit Your Own Band")
-            }
-            });
+        });
     }
 
     const handleDelete = (e) => {
@@ -102,6 +116,15 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 <br />
                 <br />
                 <input onClick={handleEdit} type="submit" value="Edit" />
+                <form>
+                {errors.length > 0 && (
+        <ul className="errors">
+          {errors.map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
+      </form>
                 <br />
                 <input onClick={handleDelete} type="submit" value="Delete" />
             </form>

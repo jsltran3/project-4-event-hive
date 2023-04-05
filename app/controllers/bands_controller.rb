@@ -17,16 +17,33 @@ class BandsController < ApplicationController
 
     end
 
+    # def update
+
+    #     user = User.find_by(id: session[:user_id])
+
+    #     # band = @current_user.bands.find_by(id: params[:id])
+
+    #     band = user.bands.find_by(id: params[:id])
+
+    #     if band
+    #         band.update(band_params)
+    #         render json: band
+    #     else
+    #         render json: { errors: ["Form can't be empty"] }, status: :unprocessable_entity
+    #         # render json: { errors: [band.errors.full_messages] }, status: :unprocessable_entity
+
+    #     end
+    # end
+
     def update
 
-        band = @current_user.bands.find_by(id: params[:id])
+        user = User.find_by(id: session[:user_id])
 
-        if band.user_id == @current_user.id
-            band.update(band_params)
-            render json: band
-        else
-            render json: { errors: [band.errors.full_messages] }, status: :unprocessable_entity
-        end
+        # band = @current_user.bands.find_by(id: params[:id])
+
+        band = user.bands.find_by(id: params[:id])
+
+        render json: band
     end
 
     def index 
@@ -67,7 +84,7 @@ class BandsController < ApplicationController
     end
 
     def band_params
-        params.permit(:name, :concert_ticket_id)
+        params.permit(:name, :band, :id, :concert_ticket_id)
     end
 
 end

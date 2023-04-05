@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ChooseConcertTicketDropdowm from "./ChooseConcertTixDropDowm.js"
-import swal from "sweetalert";
-
-
-
+// import swal from "sweetalert";
 
 
 function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditConcertTicket, onDeleteConcertTicket, chosenConcertTicket }) {
+    const [errors, setErrors] = useState([]);
 
 
     useEffect(() => {
@@ -40,16 +38,27 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
             body: JSON.stringify({ "title": editConcertTicketFormData.title }),
 
         })
-        .then((response) => response.json())
-        .then((editedConcertTicket) => {
-					if (!editedConcertTicket.errors) {
-						onEditConcertTicket(editedConcertTicket)
-						swal("Concert Ticket Edited!")
-					}
-					else {
-						swal("Can only edit your own ticket")
-					}
-					});
+        // .then((response) => response.json())
+        // .then((editedConcertTicket) => {
+		// 			if (!editedConcertTicket.errors) {
+		// 				onEditConcertTicket(editedConcertTicket)
+		// 				swal("Concert Ticket Edited!")
+		// 			}
+		// 			else {
+		// 				swal("Can only edit your own ticket")
+		// 			}
+		// 			});
+        .then((r) => {
+					if (r.ok) {
+						r.json().then((r) => {
+								onEditConcertTicket(r)
+						});
+        } else {
+            // r.json().then((err) => console.log(err.errors))
+            r.json().then((err) => setErrors(err.errors))
+        }
+    })
+		
     }
 
     const handleDelete = (e) => {
@@ -62,19 +71,28 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
         fetch(`/concert_tickets/${id}`, {
             method: "DELETE",
         })
-        .then((response) => {
-            console.log("response from deletion action: ", response);
-            if (response) {
-                onDeleteConcertTicket(chosenConcertTicket);
-                swal("Concert Ticket Deleted!");
+        // .then((response) => {
+        //     console.log("response from deletion action: ", response);
+        //     if (response) {
+        //         onDeleteConcertTicket(chosenConcertTicket);
+        //         swal("Concert Ticket Deleted!");
+        //     }
+        //     else {
+        //         swal("Can only delete your own ticket")
+        //     }
+        // });
+        .then((r) => {
+            if (r.ok) {
+                r.json().then((r) => { onEditConcertTicket(r)
+                });
+            } else {
+                // r.json().then((err) => setErrors(err.errors))
+								r.json().then((err) => console.log(err.errors))
+
             }
-            else {
-                swal("Can only delete your own ticket")
-            }
-        });
+        })
     }
 
-    console.log("Displaying concertTickets on EditConcertTicketsForm", concertTickets)
 
 
     return (
@@ -94,8 +112,15 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 									value={editConcertTicketFormData.title}/>
                 <br />
       
-                <br />
+                {/* <br /> */}
                 <input onClick={handleEdit} type="submit" value="Submit Edit Changes" />
+                {/* {errors.length > 0 && (
+                    <ul className="errors"> {errors.map((error) => (
+                    <li key={error}>{error}</li>
+                    ))}
+                    </ul>
+                    )
+                } */}
                 <br />
                 <input onClick={handleDelete} type="submit" value="Delete Concert Ticket" />
             </form>
