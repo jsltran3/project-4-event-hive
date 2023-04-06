@@ -55,20 +55,20 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
         //         swal("Band Edited!")
         //     }
         //     else {
-        //         swal("Can Only Edit Your Own Band")
+        //         swal("Field blank or Band not owner")
         //     }
         //     });
-        .then((r) =>{
+        .then((r) => {
             if (r.ok) {
                 r.json().then((r) => {
                     onEditBand(r)
-                    // console.log(r)
                 });
             } else {
-                r.json().then((err) => setErrors(err.errors))
-
+                // r.json().then((err) => console.log("this is the error", err.errors.title))
+                r.json().then((err) => console.log(err.errors.title))
             }
-        });
+        })
+
     }
 
     const handleDelete = (e) => {
@@ -118,13 +118,13 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 <input onClick={handleEdit} type="submit" value="Edit" />
                 <form>
                 {errors.length > 0 && (
-        <ul className="errors">
-          {errors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      )}
-      </form>
+                    <ul className="errors">
+                      {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                        ))}
+                    </ul>
+                     )}
+                </form>
                 <br />
                 <input onClick={handleDelete} type="submit" value="Delete" />
             </form>

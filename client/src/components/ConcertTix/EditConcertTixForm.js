@@ -49,15 +49,15 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
 		// 			}
 		// 			});
         .then((r) => {
-					if (r.ok) {
-						r.json().then((r) => {
-								onEditConcertTicket(r)
-						});
-        } else {
-            // r.json().then((err) => console.log(err.errors))
-            r.json().then((err) => setErrors(err.errors))
-        }
-    })
+            if (r.ok) {
+                r.json().then((r) => {
+                    onEditConcertTicket(r)
+                });
+            } else {
+                // r.json().then((err) => console.log("this is the error", err.errors.title))
+                r.json().then((err) => setErrors(err.errors.title))
+            }
+        })
 		
     }
 
@@ -87,11 +87,13 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
                 });
             } else {
                 // r.json().then((err) => setErrors(err.errors))
-								r.json().then((err) => console.log(err.errors))
+				r.json().then((err) => console.log("this is the error", err.errors))
 
             }
-        })
+    })
     }
+
+    // let errorMsgs = 
 
 
 
@@ -114,13 +116,14 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
       
                 {/* <br /> */}
                 <input onClick={handleEdit} type="submit" value="Submit Edit Changes" />
-                {/* {errors.length > 0 && (
+                {errors.length > 0 && (
                     <ul className="errors"> {errors.map((error) => (
                     <li key={error}>{error}</li>
                     ))}
                     </ul>
                     )
-                } */}
+                }
+                {/* {errors.map((error) => error)} */}
                 <br />
                 <input onClick={handleDelete} type="submit" value="Delete Concert Ticket" />
             </form>

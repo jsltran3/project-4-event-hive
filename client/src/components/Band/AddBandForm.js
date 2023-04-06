@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js"
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenConcertTicket }) {
     const [errors, setErrors] = useState([]);

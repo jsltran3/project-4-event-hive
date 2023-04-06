@@ -9,7 +9,7 @@ class BandsController < ApplicationController
         if band.valid?
             render json: band, status: :created
         else 
-            render json: { errors: ["Form can't be empty"] }, status: :unauthorized
+            render json: { errors: band.errors.full_messages }, status: :unauthorized
         end
 
         # render json: band, status: :created
@@ -78,9 +78,7 @@ class BandsController < ApplicationController
     private 
 
     def render_unprocessable_entity(invalid)
-        
         render json:{error: invalid.record.errors}, status: :unprocessable_entity
-
     end
 
     def band_params

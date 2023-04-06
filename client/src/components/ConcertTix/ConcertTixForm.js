@@ -30,8 +30,10 @@ function ConcertTixForm({ onAddConcertTicket }) {
                     onAddConcertTicket(r)
                 });
             } else {
+                // r.json().then((err) => setErrors(err.errors))
                 r.json().then((err) => setErrors(err.errors))
-                
+                // r.json().then((err) => console.log(err.errors))
+
             }
             }
         );
