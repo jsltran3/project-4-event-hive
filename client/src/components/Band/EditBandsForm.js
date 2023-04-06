@@ -47,25 +47,15 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
             },
             body: JSON.stringify({"name": editBandFormData["name"], "concert_ticket_id": concertTicketId}),
         })
-        // .then((response) => response.json())
-        // // .then((editedband) => onEditBand(editedband))
-        // .then((editedband) => {
-        //     if (!editedband) {
-        //         onEditBand(editedband)
-        //         swal("Band Edited!")
-        //     }
-        //     else {
-        //         swal("Field blank or Band not owner")
-        //     }
-        //     });
         .then((r) => {
             if (r.ok) {
                 r.json().then((r) => {
-                    onEditBand(r)
+                    onEditBand(r);
                 });
             } else {
-                // r.json().then((err) => console.log("this is the error", err.errors.title))
-                r.json().then((err) => setErrors(err.errors.title))
+                r.json().then((err) => console.log("this is the error", err.errors))
+                // r.json().then((err) => setErrors(err.errors.title))
+
             }
         })
 

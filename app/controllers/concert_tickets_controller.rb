@@ -21,6 +21,7 @@ class ConcertTicketsController < ApplicationController
 
     def update
         user_id = User.find_by(id: session[:user_id])
+
         concert_ticket = ConcertTicket.find_by(id: params[:id])
 
         if concert_ticket
@@ -69,7 +70,7 @@ class ConcertTicketsController < ApplicationController
             concert_ticket.destroy
             head :no_content
         else
-            render json: { error: "Bad request, cannot be deleted" }, status: 400
+            render json: { error: concert_ticket.errors.full_messages }, status: unauthorized
         end
     end
 

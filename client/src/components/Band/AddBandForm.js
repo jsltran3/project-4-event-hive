@@ -18,8 +18,7 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
         // setErrors([]);
 
         const id = chosenConcertTicket.id;
-        // NOTE: The 'Application Controller' will handle the '@current_user' so that it already knows the session["user_id"] to use in this scenario
-        // Therefore, all you need to do is pass in a fetch request to the '/concertTickets' route:
+
         fetch(`/concert_tickets/${id}/bands`, {
             method: "POST",
             headers: {
@@ -35,7 +34,6 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
 						if (r.ok) {
 							r.json().then((r) => {
 								onAddBand(r)
-                                // console.log(r)
 							});
 						} else {
 							r.json().then((err) => setErrors(err.errors))
@@ -59,16 +57,16 @@ function AddBandForm({ onAddBand, concertTickets, onChooseConcertTicket, chosenC
                 <input onChange={handleCreateBandChange} type="text" id="name" name="band_name"/>
                 <br />
                 <input onClick={handleCreate} type="submit"/>
-								<form>
                 {errors.length > 0 && (
-        <ul className="errors">
-          {errors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      )}
-      </form>
-            </form>
+                    <ul className="errors">
+                        {errors.map((error) => (
+                        <li key={error}>{error}</li>
+                        ))}
+                    </ul>
+                )}
+       
+     
+						</form>
         </div>
     )
 

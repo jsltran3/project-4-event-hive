@@ -1,10 +1,13 @@
 class BandsController < ApplicationController
-
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+    
+    before_action :authorize, only: [:update]
+
 
     def create 
- 
-        band = @current_user.bands.create(band_params)
+        user_id = User.find_by(id: session[:user_id])
+
+        band = user_id.bands.create(band_params)
         
         if band.valid?
             render json: band, status: :created
@@ -12,39 +15,34 @@ class BandsController < ApplicationController
             render json: { errors: band.errors.full_messages }, status: :unauthorized
         end
 
-        # render json: band, status: :created
-
 
     end
 
-    # def update
+    def update
+        user_id = User.find_by(id: session[:user_id])
 
+        # band = user_id.bands.find_by(id: params[:id])
+        band = Band.find_by(id: params[:id])
+
+        if band
+            band.update!(band_params)
+            render json: band
+        else
+            # render json: { errors: ["Form can't be empty"] }, status: :unprocessable_entity
+            render json: { errors: band.errors.full_messages }, status: :unauthorized
+            
+        end
+    end
+
+    # def update
     #     user = User.find_by(id: session[:user_id])
 
     #     # band = @current_user.bands.find_by(id: params[:id])
 
     #     band = user.bands.find_by(id: params[:id])
-
-    #     if band
-    #         band.update(band_params)
-    #         render json: band
-    #     else
-    #         render json: { errors: ["Form can't be empty"] }, status: :unprocessable_entity
-    #         # render json: { errors: [band.errors.full_messages] }, status: :unprocessable_entity
-
-    #     end
+    #     band.update!(band_params)
+    #     render json: band
     # end
-
-    def update
-
-        user = User.find_by(id: session[:user_id])
-
-        # band = @current_user.bands.find_by(id: params[:id])
-
-        band = user.bands.find_by(id: params[:id])
-
-        render json: band
-    end
 
     def index 
         bands = @current_user.bands.all
