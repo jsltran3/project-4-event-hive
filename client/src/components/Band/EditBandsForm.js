@@ -65,7 +65,7 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                 });
             } else {
                 // r.json().then((err) => console.log("this is the error", err.errors.title))
-                r.json().then((err) => console.log(err.errors.title))
+                r.json().then((err) => setErrors(err.errors.title))
             }
         })
 

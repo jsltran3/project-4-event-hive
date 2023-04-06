@@ -83,7 +83,8 @@ function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditCo
         // });
         .then((r) => {
             if (r.ok) {
-                r.json().then((r) => { onEditConcertTicket(r)
+                r.json().then((r) => { 
+                    onEditConcertTicket(r)
                 });
             } else {
                 // r.json().then((err) => setErrors(err.errors))
