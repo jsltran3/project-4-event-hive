@@ -53,8 +53,8 @@ function EditBandForm({ bandOptions, setbandOptions, bandId, setBandId, onChange
                     onEditBand(r);
                 });
             } else {
-                r.json().then((err) => console.log("this is the error", err.errors))
-                // r.json().then((err) => setErrors(err.errors.title))
+                // r.json().then((err) => console.log("this is the error", err.errors))
+                r.json().then((err) => setErrors(err.errors))
 
             }
         })

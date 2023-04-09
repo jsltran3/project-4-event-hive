@@ -2,16 +2,19 @@
 
 class ConcertTicketsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
+    before_action :authorize_user, only: [:update]
 
-    before_action :authorize, only: [:update]
+    # before_action :authorize, only: [:update]
     
-
+    #working
     def create 
+        
         concert_ticket = ConcertTicket.create(concert_ticket_params)
 
         if concert_ticket.valid?
             render json: concert_ticket, status: :created
         else 
+        
             render json: { errors: concert_ticket.errors.full_messages }, status: :unauthorized
         end
 
@@ -19,19 +22,68 @@ class ConcertTicketsController < ApplicationController
 
     end
 
+    #kinda working?
+    # def create 
+    #     user = User.find_by(id: session[:user_id])
+
+    #     concert_ticket = ConcertTicket.create!(concert_ticket_params)
+
+    #     render json: concert_ticket, status: :created
+
+    #     rescue ActiveRecord::RecordInvalid => e
+    #     render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+
+    # end
+
+  #   def create
+  #     user = User.find_by(id: session[:user_id])
+  #     @concert_ticket = user.messages.new(messages_params)
+  
+  #     if @message.valid?
+  #       render json: @concert_ticket, status: :created
+  #     else
+  #           render json: { errors: concert_ticket.errors.full_messages }, status: :unauthorized
+  # end
+  #   end
+
+    # def update
+    #     # user_id = User.find_by(id: session[:user_id])
+    #     user_id = @current_user.id
+
+    #     concert_ticket = ConcertTicket.find_by(id: params[:id])
+
+    #     if concert_ticket.users.find_by(id: user_id) 
+    #         concert_ticket.update(concert_ticket_params) 
+    #         render json: concert_ticket
+    #     else
+    #         render json: { errors: concert_ticket.record.errors.full_messages }, status: :unprocessable_entity
+    
+    #     end
+
+    # end
+
     def update
-        user_id = User.find_by(id: session[:user_id])
-
-        concert_ticket = ConcertTicket.find_by(id: params[:id])
-
-        if concert_ticket
-            concert_ticket.update!(concert_ticket_params) 
-            render json: concert_ticket
+        @concert_ticket = ConcertTicket.find(params[:id])
+        
+        if @concert_ticket.update(concert_ticket_params)
+          render json: @concert_ticket
         else
-            render json: { errors: concert_ticket.errors.full_messages }, status: :unauthorized
+          render json: { errors: @concert_ticket.errors.full_messages }, status: :unprocessable_entity
         end
+      end
 
-    end
+    # def update
+    #     user = User.find_by(id: session[:user_id])
+    #     concert_ticket = ConcertTicket.find_by(id: params[:id])
+    #     # user = @current_user
+        
+    #     if concert_ticket.users.find_by(id: user_id) 
+    #         concert_ticket.update!(concert_ticket_params) 
+    #         render json: concert_ticket
+    #     # rescue ActiveRecord::RecordInvalid => e
+    #     # render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
+
+    # end
 
     def index 
         # byebug
@@ -79,13 +131,28 @@ class ConcertTicketsController < ApplicationController
     # Custom
     private 
 
+    # def concert_ticket_params
+    #     # byebug
+    #     params.permit(:title, :id)
+    # end
+
     def concert_ticket_params
-        # byebug
-        params.permit(:title, :id)
-    end
+        params.require(:concert_ticket).permit(:title, :id)
+      end
 
     def render_unprocessable_entity(invalid)
+        # byebug
         render json:{errors: invalid.record.errors}, status: :unprocessable_entity
     end
+
+    def authorize_user
+        @current_user
+
+
+        @concert_ticket = ConcertTicket.find(params[:id])
+        unless @concert_ticket.users.include? @current_user
+          render json: { errors: ['Unauthorized'] }, status: :unauthorized
+        end
+      end
 
 end

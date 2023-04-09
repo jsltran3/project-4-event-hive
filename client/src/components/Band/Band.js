@@ -7,8 +7,8 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
 
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    console.log("Concert Tickets in Band Main component: ", concertTickets);
 
+    
     useEffect(() => {
         fetch("/concert_tickets", {
         method: "GET",
@@ -51,7 +51,7 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
                 showAdd && showEdit &&
                 <hr/>
             }
-            {
+            {/* {
                 showEdit &&
                 <EditBandForm 
                     bandOptions={bandOptions} 
@@ -64,7 +64,7 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
                     onChooseConcertTicket={onChooseConcertTicket} 
                     chosenConcertTicket={chosenConcertTicket}
                 />
-            }
+            } */}
         </div>
     )
 }
