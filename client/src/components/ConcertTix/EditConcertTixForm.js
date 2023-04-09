@@ -68,7 +68,9 @@ function EditConcertTicketForm({
         } else {
           console.log("I'm in the else branch");
           //   r.json().then((err) => console.log("this is the error", err));
-          r.json().then((err) => setErrors([err]));
+          //we're doing this to see what the shape of the errors are --in this case, it's a string
+          //   r.json().then((err) => setErrors([err]));
+          r.json().then((err) => setErrors(err.errors));
         }
       });
   };
