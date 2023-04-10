@@ -5,30 +5,30 @@ class BandsController < ApplicationController
     # before_action :authorize
 
 
-    # def create 
-    #     user_id = User.find_by(id: session[:user_id])
+    def create 
+        user_id = User.find_by(id: session[:user_id])
 
-    #     band = user_id.bands.create(band_params)
+        band = user_id.bands.create(band_params)
         
-    #     if band.save
-    #         render json: band, status: :created
-    #     else 
-    #         render json: { errors: band.errors.full_messages }, status: :unprocessable_entity
+        if band.save
+            render json: band, status: :created
+        else 
+            render json: { errors: band.errors.full_messages }, status: :unprocessable_entity
+        end
+
+            #     band = @current_user.bands.find_by(id: params[:id])
+    #     if band.user_id == @current_user.id
+    #         band.destroy
+    #         head :no_content
     #     end
-
-    #         #     band = @current_user.bands.find_by(id: params[:id])
-    # #     if band.user_id == @current_user.id
-    # #         band.destroy
-    # #         head :no_content
-    # #     end
-    # end
-
-    def create
-        user = User.find_by(id: session[:user_id])
-
-        band = user.bands.create(band_params)
-        render json: band, status: :created
     end
+
+    # def create
+    #     user = User.find_by(id: session[:user_id])
+
+    #     band = user.bands.create(band_params)
+    #     render json: band, status: :created
+    # end
 
     # def create
 

@@ -11,9 +11,10 @@ function EditConcertTicketForm({
   onDeleteConcertTicket,
   chosenConcertTicket,
 }) {
-  const [errors, setErrors] = useState([]);
+  //set two error states for two diff submissions
+  const [editErrors, setEditErrors] = useState([]);
+  const [deleteErrors, setDeleteErrors] = useState([]);
 
-  console.log("this is the top with", errors);
   useEffect(() => {
     setEditConcertTicketFormData({
       title: chosenConcertTicket.title,
@@ -70,7 +71,7 @@ function EditConcertTicketForm({
           //   r.json().then((err) => console.log("this is the error", err));
           //we're doing this to see what the shape of the errors are --in this case, it's a string
           //   r.json().then((err) => setErrors([err]));
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((err) => setEditErrors(err.errors));
         }
       });
   };
@@ -101,7 +102,7 @@ function EditConcertTicketForm({
             onDeleteConcertTicket(r);
           });
         } else {
-          r.json().then((err) => console.log(err.errors));
+          r.json().then((err) => setDeleteErrors(err.errors));
         }
       });
   };
@@ -135,10 +136,10 @@ function EditConcertTicketForm({
               type="submit"
               value="Submit Edit Changes"
             />
-            {errors.length > 0 && (
+            {editErrors.length > 0 && (
               <ul className="errors">
-                {errors.map((error, idx) => (
-                  <li key={idx}>{JSON.stringify(error)}</li>
+                {editErrors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
                 ))}
               </ul>
             )}
@@ -149,10 +150,10 @@ function EditConcertTicketForm({
               type="submit"
               value="Delete Concert Ticket"
             />
-            {errors.length > 0 && (
+            {deleteErrors.length > 0 && (
               <ul className="errors">
-                {errors.map((error, idx) => (
-                  <li key={idx}>{JSON.stringify(error)}</li>
+                {deleteErrors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
                 ))}
               </ul>
             )}

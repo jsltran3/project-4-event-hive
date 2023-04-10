@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ChooseConcertTixDropDowm from "../ConcertTix/ChooseConcertTixDropDowm.js";
 // import swal from "sweetalert";
 
@@ -12,6 +12,10 @@ function AddBandForm({
   const [createBandFormData, setCreateBandFormData] = useState({
     name: "",
   });
+
+  const canAddBand = useMemo(() => {
+    return chosenConcertTicket.id !== undefined;
+  }, [chosenConcertTicket]);
 
   const handleCreateBandChange = (e) => {
     setCreateBandFormData({
@@ -44,12 +48,9 @@ function AddBandForm({
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
-        // r.json().then((err) => console.log(err.errors))
+        // r.json().then((err) => console.log(err.errors));
       }
     });
-    // .then((response) => response.json())
-    // // NOTE: This is done to send up the new concertTicket up to the parent component, 'App.js', accordingly:
-    // .then((newBand) => onAddBand(newBand));
   };
 
   return (
@@ -69,7 +70,7 @@ function AddBandForm({
           name="band_name"
         />
         <br />
-        <input onClick={handleCreate} type="submit" />
+        <input disabled={!canAddBand} onClick={handleCreate} type="submit" />
         {errors.length > 0 && (
           <ul className="errors">
             {errors.map((error) => (

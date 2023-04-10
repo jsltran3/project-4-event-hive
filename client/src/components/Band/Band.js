@@ -2,56 +2,62 @@ import React, { useState, useEffect } from "react";
 import AddBandForm from "./AddBandForm.js";
 import EditBandForm from "./EditBandsForm.js";
 
+function Band({
+  onAddBand,
+  bandOptions,
+  setBandOptions,
+  bandId,
+  setBandId,
+  onChangeBandInfo,
+  onEditBand,
+  onDeleteBand,
+  concertTickets,
+  onChooseConcertTicket,
+  chosenConcertTicket,
+  onFetchConcertTickets,
+}) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
-function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onChangeBandInfo, onEditBand, onDeleteBand, concertTickets, onChooseConcertTicket, chosenConcertTicket, onFetchConcertTickets }) {
+  useEffect(() => {
+    fetch("/concert_tickets", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        onFetchConcertTickets(data);
+      });
+  }, []);
 
-    const [showAdd, setShowAdd] = useState(false);
-    const [showEdit, setShowEdit] = useState(false);
+  function toggleAddBands() {
+    setShowAdd(!showAdd);
+  }
 
-    
-    useEffect(() => {
-        fetch("/concert_tickets", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            onFetchConcertTickets(data);
-        });
-    }, []);
-
-    function toggleAddBands() {
-        setShowAdd(!showAdd);
-    }
-
-    function toggleEditBands() {
-        setShowEdit(!showEdit);
-    }
-    return (
-        <div>
-            <h1>Bands</h1>
-            <button onClick={toggleAddBands}>Add Bands</button>
-            <br />
-            <br />
-            <button onClick={toggleEditBands}>Edit Band Name</button>
-            <br />
-            {   
-                showAdd &&
-                <AddBandForm 
-                    onAddBand={onAddBand} 
-                    concertTickets={concertTickets} 
-                    onChooseConcertTicket={onChooseConcertTicket} 
-                    chosenConcertTicket={chosenConcertTicket}
-                />
-            }
-            {   
-                showAdd && showEdit &&
-                <hr/>
-            }
-            {/* {
+  function toggleEditBands() {
+    setShowEdit(!showEdit);
+  }
+  return (
+    <div>
+      <h1>Bands</h1>
+      <button onClick={toggleAddBands}>Add Bands</button>
+      <br />
+      <br />
+      {/* <button onClick={toggleEditBands}>Edit Band Name</button> */}
+      <br />
+      {showAdd && (
+        <AddBandForm
+          onAddBand={onAddBand}
+          concertTickets={concertTickets}
+          onChooseConcertTicket={onChooseConcertTicket}
+          chosenConcertTicket={chosenConcertTicket}
+        />
+      )}
+      {showAdd && showEdit && <hr />}
+      {/* {
                 showEdit &&
                 <EditBandForm 
                     bandOptions={bandOptions} 
@@ -65,8 +71,8 @@ function Band({ onAddBand, bandOptions, setBandOptions, bandId, setBandId, onCha
                     chosenConcertTicket={chosenConcertTicket}
                 />
             } */}
-        </div>
-    )
+    </div>
+  );
 }
 
 export default Band;
