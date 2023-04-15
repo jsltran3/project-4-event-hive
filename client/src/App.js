@@ -20,7 +20,6 @@ function App() {
   const { setUserInfo } = useContext(UserContext);
 
   useEffect(() => {
-    // auto-login
     fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => {

@@ -1,17 +1,13 @@
 import React, { useEffect, useState, useMemo } from "react";
 import ChooseConcertTicketDropdowm from "./ChooseConcertTixDropDowm.js";
 
-// import swal from "sweetalert";
-
 function EditConcertTicketForm({
-  //to do fix, matt for pluralization
   concertTickets,
   onChooseConcertTicket,
   onEditConcertTicket,
   onDeleteConcertTicket,
   chosenConcertTicket,
 }) {
-  //set two error states for two diff submissions
   const [editErrors, setEditErrors] = useState([]);
   const [deleteErrors, setDeleteErrors] = useState([]);
 
@@ -21,7 +17,6 @@ function EditConcertTicketForm({
     });
   }, [chosenConcertTicket]);
 
-  //when concertTickets changes, rerun the function inside use memo.
   const canEditTicket = useMemo(() => {
     return chosenConcertTicket.id !== undefined;
   }, [chosenConcertTicket]);
@@ -50,30 +45,19 @@ function EditConcertTicketForm({
       },
 
       body: JSON.stringify({ title: editConcertTicketFormData.title }),
-    })
-      // .then((response) => response.json())
-      // .then((editedConcertTicket) => {
-      // 			if (!editedConcertTicket.errors) {
-      // 				onEditConcertTicket(editedConcertTicket)
-      // 				swal("Concert Ticket Edited!")
-      // 			}
-      // 			else {
-      // 				swal("Can only edit your own ticket")
-      // 			}
-      // 			});
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((r) => {
-            onEditConcertTicket(r);
-          });
-        } else {
-          console.log("I'm in the else branch");
-          //   r.json().then((err) => console.log("this is the error", err));
-          //we're doing this to see what the shape of the errors are --in this case, it's a string
-          //   r.json().then((err) => setErrors([err]));
-          r.json().then((err) => setEditErrors(err.errors));
-        }
-      });
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((r) => {
+          onEditConcertTicket(r);
+        });
+      } else {
+        console.log("I'm in the else branch");
+        //   r.json().then((err) => console.log("this is the error", err));
+        //we're doing this to see what the shape of the errors are --in this case, it's a string
+        //   r.json().then((err) => setErrors([err]));
+        r.json().then((err) => setEditErrors(err.errors));
+      }
+    });
   };
 
   const handleDelete = (e) => {
@@ -85,26 +69,15 @@ function EditConcertTicketForm({
 
     fetch(`/concert_tickets/${id}`, {
       method: "DELETE",
-    })
-      // .then((response) => {
-      //     console.log("response from deletion action: ", response);
-      //     if (response) {
-      //         onDeleteConcertTicket(chosenConcertTicket);
-      //         swal("Concert Ticket Deleted!");
-      //     }
-      //     else {
-      //         swal("Can only delete your own ticket")
-      //     }
-      // });
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((r) => {
-            onDeleteConcertTicket(r);
-          });
-        } else {
-          r.json().then((err) => setDeleteErrors(err.errors));
-        }
-      });
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((r) => {
+          onDeleteConcertTicket(r);
+        });
+      } else {
+        r.json().then((err) => setDeleteErrors(err.errors));
+      }
+    });
   };
 
   return (

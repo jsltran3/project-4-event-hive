@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button, Box } from "./styles";
 
-
 function NavBar({ user, setUser }) {
-  const {userInfo} = useContext(UserContext)
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
-    if (userInfo.username) console.table(userInfo)
-  }, [userInfo])
-  
+    if (userInfo.username) console.table(userInfo);
+  }, [userInfo]);
+
   function handleLogoutClick() {
     fetch("/logout", { method: "DELETE" }).then((r) => {
       if (r.ok) {
@@ -20,15 +19,14 @@ function NavBar({ user, setUser }) {
     });
   }
 
-
   return (
     <>
       <Wrapper>
         <Nav>
           <Button as={Link} to="/about">
             About
-          </Button> 
-          
+          </Button>
+
           <Button as={Link} to="/concerttickets">
             Concert Tickets
           </Button>
@@ -44,19 +42,12 @@ function NavBar({ user, setUser }) {
           {/* <div>
             {userInfo.username}
           </div> */}
-          <Box>
-            {userInfo.username}
-          </Box>
-
-          
+          <Box>{userInfo.username}</Box>
         </Nav>
       </Wrapper>
-
     </>
   );
 }
-
-
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,8 +67,6 @@ const Logo = styled.h1`
   text-overflow: ellipsis;
   width: 200px;
 
-
-
   a {
     color: inherit;
     text-decoration: none;
@@ -91,7 +80,4 @@ const Nav = styled.nav`
   left: 20px;
 `;
 
-
-
 export default NavBar;
-
