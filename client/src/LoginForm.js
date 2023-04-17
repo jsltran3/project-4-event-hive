@@ -3,7 +3,7 @@ import { Button, Error, Input, FormField, Label } from "./styles";
 import { UserContext } from "./contexts/userContext";
 
 function LoginForm({ onLogin }) {
-  const {setUserInfo} = useContext(UserContext)
+  const { setUserInfo } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,8 +22,9 @@ function LoginForm({ onLogin }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => {onLogin(user);
-        setUserInfo(user)
+        r.json().then((user) => {
+          onLogin(user);
+          setUserInfo(user);
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -54,11 +55,7 @@ function LoginForm({ onLogin }) {
         />
       </FormField>
       <FormField>
-        <Button 
-        variant="fill" 
-        color="primary" 
-        type="submit"
-        >
+        <Button variant="fill" color="primary" type="submit">
           {isLoading ? "Loading..." : "Login"}
         </Button>
       </FormField>

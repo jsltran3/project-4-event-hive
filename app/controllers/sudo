@@ -1,0 +1,16 @@
+# Create a custom route that takes a keyword as a parameter.
+    # The controller action will go and find all the users that have concert tickets for this band
+    # The result of the action will be rendered json of all the users who have concert tickets that meet this criteria and if no users have tickets that meet the criteria make sure you render an error message that says so.
+
+Q I want to find who created that have tickets to mychem crocadile show
+  #create a route that works
+  x
+  #use :bandname as part of route
+  x
+  #create GET /find_attendees/:bandname 
+  x
+  #auth request 
+  x
+  #create method find_attendees in the concert_tix
+  #do logic 
+  #return list of user ids with bands of secret 

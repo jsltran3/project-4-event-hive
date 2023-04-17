@@ -3,8 +3,35 @@
 
 class ConcertTicketsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
-    before_action :authorize_user, only: [:update]
-    skip_before_action :authorize_user, only: [:fomo]
+    skip_before_action :authorize, only: ["find_shows"]
+
+    before_action :authorize, only: [:update]
+        
+
+    def find_shows
+
+        band_name = params[:bandname]
+        
+        shows = ConcertTicket
+            #all of the concert tickets
+            .all
+            #filter by subset
+            .filter{|concert_ticket| concert_ticket
+                                        .bands
+                                        .find_by(name: band_name)
+                                    }
+
+        render json: shows
+    
+    end 
+
+
+
+
+
+
+
+
 
     # Create a custom route that takes a keyword as a parameter.
     # The controller action will go and find all the users that have concert tickets for this band
@@ -22,19 +49,19 @@ class ConcertTicketsController < ApplicationController
     # create the route
     #loop through all users and find the band which is through concert tickets 
     #
-    def fomo
+    # def fomo
 
-        ConcertTicket.all.each do |tix|
-            puts params[:thisband]
-            if tix.bands.name == params[:thisband]
-                puts "you got it"
+    #     ConcertTicket.all.each do |tix|
+    #         puts params[:thisband]
+    #         if tix.bands.name == params[:thisband]
+    #             puts "you got it"
 
-            else
-                puts "done fucked"
-            end
+    #         else
+    #             puts "done fucked"
+    #         end
 
-        end 
-    end
+    #     end 
+    # end
 
 
     def create 
