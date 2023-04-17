@@ -68,7 +68,8 @@ function EditConcertTicketForm({
           onDeleteConcertTicket(r);
         });
       } else {
-        r.json().then((err) => setDeleteErrors(err.errors));
+        // r.json().then((err) => setDeleteErrors(err.errors));
+        r.json().then((err) => console.log(err.errors));
       }
     });
   };

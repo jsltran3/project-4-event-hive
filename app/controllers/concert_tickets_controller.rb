@@ -5,6 +5,8 @@ class ConcertTicketsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
 
     before_action :authorize, only: [:update]
+
+
         
     def create 
         concert_ticket = ConcertTicket.create(concert_ticket_params)
