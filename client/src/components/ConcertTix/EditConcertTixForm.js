@@ -51,10 +51,6 @@ function EditConcertTicketForm({
           onEditConcertTicket(r);
         });
       } else {
-        console.log("I'm in the else branch");
-        //   r.json().then((err) => console.log("this is the error", err));
-        //we're doing this to see what the shape of the errors are --in this case, it's a string
-        //   r.json().then((err) => setErrors([err]));
         r.json().then((err) => setEditErrors(err.errors));
       }
     });
@@ -63,9 +59,6 @@ function EditConcertTicketForm({
   const handleDelete = (e) => {
     e.preventDefault();
     const id = chosenConcertTicket.id;
-
-    // console.log("handleDelete function called in EditConcertTicketForm child component");
-    // console.log("id: ", id);
 
     fetch(`/concert_tickets/${id}`, {
       method: "DELETE",
@@ -102,8 +95,6 @@ function EditConcertTicketForm({
             <br />
 
             <input
-              // the disabled property this input should be disabled when the concertticket is undefined or user hasn't selected dropdown from above
-              //html property for inputs
               disabled={!canEditTicket}
               onClick={handleEdit}
               type="submit"

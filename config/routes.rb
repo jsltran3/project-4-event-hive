@@ -12,7 +12,6 @@
     get "/me", to: "users#show"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
-    get "/find_shows/:bandname", to: "concert_tickets#find_shows"
     get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
   end 

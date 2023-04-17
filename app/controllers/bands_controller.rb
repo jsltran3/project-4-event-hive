@@ -38,16 +38,6 @@ class BandsController < ApplicationController
         end
     end
 
-    # def destroy
-    #     band = @current_user.bands.find_by(id: params[:id])
-    #     if band.user_id == @current_user.id
-    #         band.destroy
-    #         head :no_content
-    #     end
-    # end
-
-    # Custom
-
     private 
 
     def render_unprocessable_entity(invalid)
@@ -57,10 +47,6 @@ class BandsController < ApplicationController
     def band_params
         params.permit(:name, :band, :id, :concert_ticket_id)
     end
-
-    # def band_params
-    #     permit(:name, :band, :id, :concert_ticket_id)
-    #   end
 
     def current_user
         @current_user

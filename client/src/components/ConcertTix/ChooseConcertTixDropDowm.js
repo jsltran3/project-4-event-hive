@@ -1,8 +1,6 @@
 import React from "react";
 
 function ChooseConcertTixDropDowm({ concertTickets, onChooseConcertTicket }) {
-  // console.log("Concert Tickets in ChooseConcertTicketForm: ", concertTickets);
-
   let concertTicketOptionsArray = concertTickets.map((concertTicket) => {
     return (
       <option key={concertTicket.id} value={concertTicket.title}>

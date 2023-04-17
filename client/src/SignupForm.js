@@ -2,15 +2,13 @@ import React, { useState, useContext } from "react";
 import { Button, Error, Input, FormField, Label } from "./styles";
 import { UserContext } from "./contexts/userContext";
 
-
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const {setUserInfo} = useContext(UserContext)
-
+  const { setUserInfo } = useContext(UserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,16 +22,17 @@ function SignUpForm({ onLogin }) {
       body: JSON.stringify({
         username,
         password,
-        password_confirmation: passwordConfirmation
+        password_confirmation: passwordConfirmation,
       }),
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => { onLogin(user); setUserInfo(user)}); 
-        
+        r.json().then((user) => {
+          onLogin(user);
+          setUserInfo(user);
+        });
       } else {
         r.json().then((err) => setErrors(err.errors));
-
       }
     });
   }
