@@ -61,13 +61,19 @@ class ConcertTicketsController < ApplicationController
 
     def destroy 
         user = User.find_by(id: session[:user_id])
-        concert_ticket = ConcertTicket.find_by(id: params[:id])
-        
-        if concert_ticket.users.find_by(id: user) 
-            concert_ticket.destroy
-            head :no_content
+        # concert_ticket = ConcertTicket.find_by(id: params[:id])
+        # user_id = @current_user.id
+        show = user.concert_tickets.find_by(id: params[:id])
+
+
+
+        # if concert_ticket.users.find_by(id: user) 
+            if show
+
+            show.destroy
+            render json: show
         else
-            render json: { error: concert_ticket.errors.full_messages }, status: unauthorized
+            render json: { errors: show.errors.full_messages }, status: unauthorized
         end
     end
 

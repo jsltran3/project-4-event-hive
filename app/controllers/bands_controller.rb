@@ -3,51 +3,61 @@ class BandsController < ApplicationController
     
     before_action :authorize, only: [:update, :serach]
 
+
+      
     def search
-        # if params
-            band_name = Band.find_by(name: params[:term])
+        @bands = Band.all.select { |band| band.name.downcase.include?(params[:term].downcase) }
+        render json: @bands
+      end
+      
+      
+      
 
-            # if band_name
-            #     found_band = band_name.all.map{ |show| band_name.name}
-            #     render json: found_band
+    # def search
+    #     # if params
+    #         band_name = Band.find_by(name: params[:term])
 
-            # else 
-            #     render json: { error: "not found"}, status: :not_found
-            # end 
-            found = band_name.all.filter{|ban| band_name.name}
+    #         # if band_name
+    #         #     found_band = band_name.all.map{ |show| band_name.name}
+    #         #     render json: found_band
 
-            render json: found
-        #     if band_name
-        #         found_band = band_naem.map{ |show| show.name}
-        #     render json: found_band
+    #         # else 
+    #         #     render json: { error: "not found"}, status: :not_found
+    #         # end 
+    #         found = band_name.all.filter{|ban| band_name.name}
 
-        #     else 
-        #         render json: { error: "not found"}, status: :not_found
-        #     end 
-        # else 
-        #     render json: { error: "not found"}, status: :not_found
-        # end 
-        # render json: band_name
-    end 
-                  #definitions
-                                #password
-                                #sessions
-                                #only look into bands 
-    def search
-        if params
-        band_name = Band.find_by(name: params[:term])
-            if band_name
-                found_band = Band.all.map{ |show| show.name}
-            render json: found_band
+    #         render json: found
+    #     #     if band_name
+    #     #         found_band = band_naem.map{ |show| show.name}
+    #     #     render json: found_band
 
-            else 
-                render json: { error: "not found"}, status: :not_found
-            end 
-        else 
-            render json: { error: "not found"}, status: :not_found
-        end 
+    #     #     else 
+    #     #         render json: { error: "not found"}, status: :not_found
+    #     #     end 
+    #     # else 
+    #     #     render json: { error: "not found"}, status: :not_found
+    #     # end 
+    #     # render json: band_name
+    # end 
+    #               #definitions
+    #                             #password
+    #                             #sessions
+    #                             #only look into bands 
+    # def search
+    #     if params
+    #     band_name = Band.find_by(name: params[:term])
+    #         if band_name
+    #             found_band = Band.all.map{ |show| show.name}
+    #         render json: found_band
+
+    #         else 
+    #             render json: { error: "not found"}, status: :not_found
+    #         end 
+    #     else 
+    #         render json: { error: "not found"}, status: :not_found
+    #     end 
         
-    end 
+    # end 
     def create 
         user_id = User.find_by(id: session[:user_id])
 
