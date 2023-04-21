@@ -1,92 +1,132 @@
-import React, { useEffect, useState } from "react";
-import ChooseConcertTicketDropdowm from "./ChooseConcertTixDropDowm.js"
+import React, { useEffect, useState, useMemo } from "react";
+import ChooseConcertTicketDropdowm from "./ChooseConcertTixDropDowm.js";
 
-function EditConcertTicketForm({ concertTickets, onChooseConcertTicket, onEditConcertTicket, onDeleteConcertTicket, chosenConcertTicket }) {
-    useEffect(() => {
-        setEditConcertTicketFormData({
-            title: chosenConcertTicket.title
+function EditConcertTicketForm({
+  concertTickets,
+  onChooseConcertTicket,
+  onEditConcertTicket,
+  onDeleteConcertTicket,
+  chosenConcertTicket,
+}) {
+  const [editErrors, setEditErrors] = useState([]);
+  const [deleteErrors, setDeleteErrors] = useState([]);
 
-        })
-    }, [chosenConcertTicket]);
-
-    const [editConcertTicketFormData, setEditConcertTicketFormData] = useState({
-        title: chosenConcertTicket.title
+  useEffect(() => {
+    setEditConcertTicketFormData({
+      title: chosenConcertTicket.title,
     });
+  }, [chosenConcertTicket]);
 
-    console.log("Displaying concertTickets on EditConcertTicketsForm" concertTickets)
+  const canEditTicket = useMemo(() => {
+    return chosenConcertTicket.id !== undefined;
+  }, [chosenConcertTicket]);
 
-    const handleEditConcertTicketChange = (e) => {
-        setEditConcertTicketFormData({...editConcertTicketFormData, [e.target.name]: e.target.value})
-    };
+  const [editConcertTicketFormData, setEditConcertTicketFormData] = useState({
+    title: chosenConcertTicket.title,
+  });
 
-    const handleEdit = (e) => {
-        e.preventDefault();
+  const handleEditConcertTicketChange = (e) => {
+    setEditConcertTicketFormData({
+      ...editConcertTicketFormData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-        const id = chosenConcertTicket.id;
+  const handleEdit = (e) => {
+    e.preventDefault();
 
-        fetch(`/concert_tickets/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
+    const id = chosenConcertTicket.id;
 
-            body: JSON.stringify({ "title": editConcertTicketFormData.title }),
+    fetch(`/concert_tickets/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
 
-        })
-        .then((response) => response.json())
-        // NOTE: This is done to send up the edited concertTicket up to the parent component, 'App.js', accordingly:
-        .then((editedConcertTicket) => onEditConcertTicket(editedConcertTicket));
-    }
+      body: JSON.stringify({ title: editConcertTicketFormData.title }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((r) => {
+          onEditConcertTicket(r);
+        });
+      } else {
+        r.json().then((err) => setEditErrors(err.errors));
+      }
+    });
+  };
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        const id = chosenConcertTicket.id;
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const id = chosenConcertTicket.id;
 
-        console.log("handleDelete function called in EditConcertTicketForm child component");
-        console.log("id: ", id);
+    fetch(`/concert_tickets/${id}`, {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((r) => {
+          onDeleteConcertTicket(r);
+        });
+      } else {
+        r.json().then((err) => setDeleteErrors(err.errors));
+        // r.json().then((err) => console.log(err.errors));
+      }
+    });
+  };
 
-        fetch(`/concert_tickets/${id}`, {
-            method: "DELETE",
-        })
-        .then((response) => {
-            // NOTE: This checks the response, and then sends back the chosenConcertTicket up to the parent to be deleted by the handler function:
-            console.log("response from deletion action: ", response);
-            console.log("response.ok: ", response.ok);
-            if (response.ok) {
-                // onDeleteConcertTicket(chosenConcertTicket);
-                console.log(chosenConcertTicket);
-
-            }
-        })
-    }
-
-
-
-    return (
+  return (
+    <div>
+      <ChooseConcertTicketDropdowm
+        concertTickets={concertTickets}
+        onChooseConcertTicket={onChooseConcertTicket}
+      />
+      {canEditTicket && (
         <div>
-            <ChooseConcertTicketDropdowm 
-                concertTickets={concertTickets} 
-                onChooseConcertTicket={onChooseConcertTicket} 
+          <h2>Edit ConcertTicket</h2>
+          <form>
+            <label htmlFor="name">Title of ConcertTicket:</label>
+            <br />
+            <input
+              onChange={handleEditConcertTicketChange}
+              type="text"
+              id="name"
+              name="title"
+              value={editConcertTicketFormData.title}
             />
-            <h2>Edit ConcertTicket</h2>
-            <form>
-                <label htmlFor="name">Title of ConcertTicket:</label>
-                <br />
-                <input onChange={handleEditConcertTicketChange} 
-									type="text" 
-									id="name" 
-									name="title" 
-									value={editConcertTicketFormData.title}/>
-                <br />
-      
-                <br />
-                <input onClick={handleEdit} type="submit" value="Submit Edit Changes" />
-                <br />
-                <input onClick={handleDelete} type="submit" value="Delete Concert Ticket" />
-            </form>
+            <br />
+
+            <input
+              disabled={!canEditTicket}
+              onClick={handleEdit}
+              type="submit"
+              value="Submit Edit Changes"
+            />
+            {editErrors.length > 0 && (
+              <ul className="errors">
+                {editErrors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
+                ))}
+              </ul>
+            )}
+            <br />
+            <input
+              disabled={!canEditTicket}
+              onClick={handleDelete}
+              type="submit"
+              value="Delete Concert Ticket"
+            />
+            {deleteErrors.length > 0 && (
+              <ul className="errors">
+                {deleteErrors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
+                ))}
+              </ul>
+            )}
+          </form>
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
 export default EditConcertTicketForm;

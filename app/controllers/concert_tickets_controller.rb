@@ -1,51 +1,35 @@
-# require pry
+
+
 
 class ConcertTicketsController < ApplicationController
-    before_action :authorize, only: [:update]
-    
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
 
+    before_action :authorize, only: [:update]
+
+
+        
     def create 
-        # byebug
-        concert_ticket = ConcertTicket.create!(concert_ticket_params)
-        render json: concert_ticket, status: :created
+        concert_ticket = ConcertTicket.create(concert_ticket_params)
+
+        if concert_ticket.valid?
+            render json: concert_ticket, status: :created
+        else 
+        
+            render json: { errors: concert_ticket.errors.full_messages }, status: :unauthorized
+        end
     end
 
     def update
-        concert_ticket = ConcertTicket.find_by(id: params[:id])
-
-        user_id = @current_user.id
- 
-        if concert_ticket.users.find_by(id: user_id) 
-            
-            concert_ticket.update(concert_ticket_params) 
-            render json: concert_ticket
+        @concert_ticket = ConcertTicket.find(params[:id])
+        
+        if @concert_ticket.update(concert_ticket_params)
+          render json: @concert_ticket
         else
-            render json: { errors: concert_ticket.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: @concert_ticket.errors.full_messages }, status: :unprocessable_entity
         end
-    end
-       # concert_ticket.users.ids
-#remove the message from the array 
-        # byebug
-        # binding.pry
+      end
 
-        #maybe use authorize function and bcrip 
-        #isolate dropdown to just the user 
-        #user in an array so it can't equate user id to the user 
-        #either loop through array 
-        # if concert_ticket.users.ids == user_id
-    # def update
-    #     user = User.find_by(id: session[:user_id])
-    #     user = 
-    #     concert_ticket = user.concert_ticket.find_by(id: params[:id])
-    #     if concert_ticket
-    #         concert_ticket.update(concert_ticket_params)
-    #       render json: concert_ticket
-    #     else 
-    #       render json: { error: "Review not found" }, status: :not_found
-    #     end
-    #   end
 
-    # Add full CRUD capability for this model
     def index 
         # byebug
         concert_tickets = ConcertTicket.all
@@ -77,23 +61,43 @@ class ConcertTicketsController < ApplicationController
 
     def destroy 
         user = User.find_by(id: session[:user_id])
-        concert_ticket = ConcertTicket.find_by(id: params[:id])
-        
-        if concert_ticket.users.find_by(id: user) 
-            concert_ticket.destroy
-            head :no_content
+        # concert_ticket = ConcertTicket.find_by(id: params[:id])
+        # user_id = @current_user.id
+        show = user.concert_tickets.find_by(id: params[:id])
+
+
+
+        # if concert_ticket.users.find_by(id: user) 
+            if show
+
+            show.destroy
+            render json: show
         else
-            render json: { error: "Bad request, cannot be deleted" }, status: 400
+            render json: { errors: show.errors.full_messages }, status: unauthorized
         end
     end
 
 
 
-    # Custom
+
     private 
 
+
+
     def concert_ticket_params
-        # byebug
-        params.permit(:title)
+        params.require(:concert_ticket).permit(:title, :id)
     end
+
+    def render_unprocessable_entity(invalid)
+        render json:{errors: invalid.record.errors}, status: :unprocessable_entity
+    end
+
+    def authorize_user
+        @current_user
+        @concert_ticket = ConcertTicket.find(params[:id])
+        unless @concert_ticket.users.include? @current_user
+          render json: { errors: ['Unauthorized'] }, status: :unauthorized
+        end
+    end     
+ 
 end
