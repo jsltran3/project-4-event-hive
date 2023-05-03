@@ -59,28 +59,56 @@ class ConcertTicketsController < ApplicationController
 
     # However, I can still add an 'else' section to provide a 'status' 400 in this scenario
 
-    def destroy 
-        user = User.find_by(id: session[:user_id])
-        # concert_ticket = ConcertTicket.find_by(id: params[:id])
-        # user_id = @current_user.id
-        show = user.concert_tickets.find_by(id: params[:id])
+    # def destroy 
+    #     # user_id = User.find_by(id: session[:user_id])
+    #     # show = User.concert_tickets.find_by(id: params[:id])
+    #     user_id = @current_user.id
+    #     show = ConcertTicket.find_by(id: params[:id])
 
 
+    #     if show.users.find_by(id: user_id) 
+    #     # if show
+            
+    #         show.destroy
+    #         render json: show
+    #     else
+    #         render json: { errors: show.errors.full_messages }, status: unauthorized
+    #     end
+    # end
 
-        # if concert_ticket.users.find_by(id: user) 
-            if show
+def destroy 
+  concert_ticket = ConcertTicket.find_by(id: params[:id])
+        
+  if concert_ticket && concert_ticket.bands.any? { |band| band.user == @current_user }
+    concert_ticket.destroy
+    head :no_content
+  else
+    render json: { errors: ["Unauthorized"] }, status: :unauthorized
+  end
+end
 
-            show.destroy
-            render json: show
-        else
-            render json: { errors: show.errors.full_messages }, status: unauthorized
-        end
-    end
+      
+      
 
 
-
+    # def destroy 
+    #     user_id = @current_user.id
+    #     show = ConcertTicket.find_by(id: params[:id])
+      
+    #     puts @current_user.inspect
+    #     puts show.inspect
+      
+    #     if show.users.find_by(id: user_id)
+    #       show.destroy
+    #       render json: show
+    #     else
+    #       render json: { errors: show.errors.full_messages }, status: :unauthorized
+    #     end
+    #   end
 
     private 
+
+      
 
 
 
@@ -93,7 +121,7 @@ class ConcertTicketsController < ApplicationController
     end
 
     def authorize_user
-        @current_user
+        @current_user = User.find_by(id: session[:user_id])
         @concert_ticket = ConcertTicket.find(params[:id])
         unless @concert_ticket.users.include? @current_user
           render json: { errors: ['Unauthorized'] }, status: :unauthorized

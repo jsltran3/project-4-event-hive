@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
     skip_before_action :authorize, only: :create
-
+    #where does the above come from. macro from rails 
+    #built in rails macros 
+    #where is auth coming from?
+    #
     def create
         user = User.create!(user_params)
 

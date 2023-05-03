@@ -1,0 +1,26 @@
+# Write a custom route that takes in a parameter n and looks at all the bands and finds any bands that have more concert tickets than n.
+    # Return all the bands who meet this condition.
+    #  If no bands met the condition then you should render json that says so
+
+n 
+if cold play
+http://localhost:3000/bands/:n
+
+create route for n in routes.rubyonrails
+create method in bands that finds n 
+in method find bands find_by 
+map through all bands based on n/count 
+return all bands if match n/count
+return the tickets from n
+
+
+find what bands have the most concert tickets 
+
+n is a concert ticket 
+create route in routes
+in method loop through  concert tickets
+find the way to quantify the concert tickets using .count 
+while looping through, add code block if band.concerttickets.count > params n 
+then return that band  or mult band save to variable and take that and return array of bands or singular band 
+
+make sure you're iterate over association without goign to that controller 
